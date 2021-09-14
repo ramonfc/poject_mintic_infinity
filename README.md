@@ -6,6 +6,6 @@ _Software application to control the virtual and physical sales of a manufacturi
 * Module to record the status of the sale
 * Vendor management
 * Management of login to the information system
-* User and rol management
+* User and rol management.
 
 
