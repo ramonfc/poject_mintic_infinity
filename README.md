@@ -8,4 +8,18 @@ _Software application to control the virtual and physical sales of a manufacturi
 * Management of login to the information system
 * User and rol management.
 
+## Team Development
+* Ramon
+* Javier
+* Wilson
+* Miguel
+* Jhon
+
+## Roles
+* Desarollador: All
+* Scrum Master: Ramón
+* Product Owner: Wilson
+* Analista: Miguel
+* Administrador BD: Javier
+
 
