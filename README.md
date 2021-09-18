@@ -1,6 +1,6 @@
 <div align="center"><img src="https://i.ibb.co/KrZjRL3/logo-infinity-v1.png" alt="MisionTIC Infinity" height="200" /> </div>
 
-# Mintic Project: Infinity
+# ♾️ Mintic Project: Infinity 
 _Software application to control the virtual and physical sales of a manufacturing enterprise, and perform tracking_
 <br>
 ## It will include the next modules:
