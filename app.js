@@ -71,6 +71,13 @@ app.get('/loged-ensayo', (req, res) => {
   });
 }) 
 
+
+app.get('/logout', (req, res) => {
+  res.render('home', {
+    titulo: 'Home'
+  });
+}) 
+
 app.get('/hello_world', (req, res) => {
     res.send('Hello World in its own route')
   })
