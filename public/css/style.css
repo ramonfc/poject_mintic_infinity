@@ -22,21 +22,9 @@
     text-align: center;
 }
 
-.forgot {
-    margin: 2%;
-    text-align: right;
-    color: rgb(10, 9, 54);
-    text-decoration: none; 
-}
 
-#forgot{
-    margin: 2%;
-    text-align: right;
-    color: rgb(10, 9, 54);
-    text-decoration: none; 
-}
 
-/*card*/
+/*card en home*/
 
 .card-img-top{
     display: block;

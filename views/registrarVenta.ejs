@@ -5,35 +5,75 @@
 
             <%- include('./partials/navVendedorAdmin'); %>
 
-            <form id="formRegistrarVenta" class="mt-3">
-                <div class="row col-3  form-floating mb-3">
-                    <input type="text" class="form-control" id="idVenta" name="idVenta"
-                        placeholder="" required>
-                    <label for="idVenta">ID</label>
-                </div>
-                <div class="row col-3 form-floating">
-                    <input type="text" class="form-control" id="valorVenta" placeholder="" name="valorVenta" required>
-                    <label for="valorVenta">Valor de la venta</label>
-                </div>
+                <h3 id="title_registrar_venta">Registrar Venta</h3>
 
-                
-                <div class="row col-5 form-floating  mt-3">                   
-                    <textarea class="form-control" id="textareaDescription" style="height: 100px"></textarea>
-                    <label for="textareaDescription">Descripción</label>
-                  </div>
+                <form id="formRegistrarVenta" class="mt-3">
+                    <!--row 1:-->
+                    <div class="row align-items-start">
 
+                        <div class="col-3  form-floating" id="idVenta">
+                            <input type="text" class="form-control" name="idVenta" placeholder="ID" required>
+                            <label for="idVenta">ID</label>
+                        </div>
 
-                <div class="row  col-3 mt-3">
-                    <button type="submit" class="btn btn-primary btn-lg mb-3">Registrar</button>
-                    <button type="reset" class="btn btn-outline-secondary btn-lg">Cancelar</button> 
-                </div>
+                        <div class="col-6  form-floating" id="vendedor">
+                            <input type="text" class="form-control" placeholder="Nombre del vendedor" name="vendedor" required>
+                            <label for="vendedor">Nombre del vendedor</label>
+                        </div>
+                        <!--Div row 1:-->
+                    </div>
 
+                    <!--row 2:-->
+                    <div class="row align-items-start" id="row2">
 
-                
-            </form>
-
+                        <div class="col-3 form-floating mt-3" id="valorVenta">
+                            <input type="text" class="form-control" placeholder="Valor de la Venta" name="valorVenta" required>
+                            <label for="valorVenta">Valor de la Venta</label>
+                        </div>
 
 
-        <%-include('./partials/footer')%>
+                        <div class="col-3 form-floating mt-3" id="fechaInicial">
+                            <input type="text" class="form-control" placeholder="Fecha Inicial" name="fechaInicial" required>
+                            <label for="fechaInicial">Fecha Inicial</label>
+                        </div>
+
+
+                        <div class="col-3 form-floating mt-3" id="fechaPago">
+                            <input type="text" class="form-control" placeholder="Fecha de Pago" name="fechaPago" required>
+                            <label for="fechaPago">Fecha de Pago</label>
+                        </div>
+
+
+                        <!--row 2:-->
+                    </div>
+
+
+
+                    <!--row 3:-->
+                    <div class="row align-items-start" id="row3">
+
+                        <div class="col-5 form-floating  mt-3" id="Description">
+                            <textarea class="form-control" style="height: 10rem;
+                            width: 40rem;" placeholder="Descripción"></textarea>
+                            <label for="textareaDescription">Descripción</label>
+                        </div>
+
+                    </div>
+
+                    <!--row 3:-->
+                    <div class="row" id="row4">
+                        <div class="col align-self-center">
+                            <button type="submit" class="btn btn-primary btn-lg col-5">Registrar</button>
+                            <button type="reset" class="btn btn-outline-secondary btn-lg col-5">Cancelar</button>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+
+                <%- include('./partials/footer')%>
     </body>
-</html>
+    </html>
