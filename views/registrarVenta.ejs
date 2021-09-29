@@ -1,0 +1,39 @@
+<%- include('./partials/head'); %>
+    <body>
+
+        <%- include('./partials/header'); %>
+
+            <%- include('./partials/navVendedorAdmin'); %>
+
+            <form id="formRegistrarVenta" class="mt-3">
+                <div class="row col-3  form-floating mb-3">
+                    <input type="text" class="form-control" id="idVenta" name="idVenta"
+                        placeholder="" required>
+                    <label for="idVenta">ID</label>
+                </div>
+                <div class="row col-3 form-floating">
+                    <input type="text" class="form-control" id="valorVenta" placeholder="" name="valorVenta" required>
+                    <label for="valorVenta">Valor de la venta</label>
+                </div>
+
+                
+                <div class="row col-5 form-floating  mt-3">                   
+                    <textarea class="form-control" id="textareaDescription" style="height: 100px"></textarea>
+                    <label for="textareaDescription">Descripción</label>
+                  </div>
+
+
+                <div class="row  col-3 mt-3">
+                    <button type="submit" class="btn btn-primary btn-lg mb-3">Registrar</button>
+                    <button type="reset" class="btn btn-outline-secondary btn-lg">Cancelar</button> 
+                </div>
+
+
+                
+            </form>
+
+
+
+        <%-include('./partials/footer')%>
+    </body>
+</html>

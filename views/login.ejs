@@ -1,0 +1,30 @@
+<%- include('./partials/head'); %>
+    <body>
+
+        <%- include('./partials/header'); %>
+
+        <%- include('./partials/navOptions'); %>
+
+            <form id="form" class="mt-3">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" name="email"
+                        placeholder="name@example.com" required>
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+                    <label for="floatingPassword">Password</label>
+                </div>
+
+                <div>
+                    <label class=" row forgot" for="forgot"><a href="#" id="forgot">Forgot Password?</a></label>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary btn-lg" onclick="hola()">Login</button>
+                <button type="reset" class="btn btn-outline-secondary btn-lg">Cancel</button>
+            </form>
+
+            <%-include('./partials/footer')%>
+    </body>
+    </html>
