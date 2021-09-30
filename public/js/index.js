@@ -7,7 +7,9 @@ function welcome(){
     alert(email);
 }
 
+
 function hola(){
-    let email = document.getElementById("floatingInput");
+    e.preventDefault();
+    let email = document.getElementById("email");
     alert(email);
 }
