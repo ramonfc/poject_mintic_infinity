@@ -104,13 +104,12 @@ dist
 .tern-port
 
 
-controllers
-models 
-views
-public
-.env
-routes
+controllers/
+models/ 
+views/
+public/
+.env/
+routes/
 package.json
 package-lock.json
-README.md 
 app.js
