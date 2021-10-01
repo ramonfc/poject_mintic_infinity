@@ -29,6 +29,8 @@ router.get('/editar_estado_ventas', getEditarEstadoVenta);
 
 router.get('/loged-ensayo', getLogedEnsayo);
 
+router.post('/loged-ensayo', getLogedEnsayo);
+
 router.get('/logout', getLogout);
 
 router.get('*', getNoPage);
