@@ -1,4 +1,5 @@
 import React from "react";
+import ListProducts from '../../components/ListProducts/ListProducts.js'
 // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // // core components
@@ -44,7 +45,9 @@ import React from "react";
 export default function TableList() {
   //const classes = useStyles();
   return (
-    <></>
+    <>
+    <ListProducts/>
+    </>
     // <GridContainer>
     //   <GridItem xs={12} sm={12} md={12}>
     //     <Card>

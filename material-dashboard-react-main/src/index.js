@@ -11,7 +11,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-// estilos css
+// estilos css Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Layouts

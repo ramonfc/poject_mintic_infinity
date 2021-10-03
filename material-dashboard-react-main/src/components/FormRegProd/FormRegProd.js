@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
 import { Form, Row, Col, Label, Input, Button } from "reactstrap"; //Container
 import "./FormRegProd.css";
 import GridItem from "components/Grid/GridItem";
@@ -10,58 +12,66 @@ export class FormRegProd extends Component {
     render() {
         return (
             // <Container id="contenedor">
-            <GridItem>
-                <div id="titulo" className="mb-5">
-                    <h2>Maestro Registro de Productos</h2>
-                </div>
-                <Form>
-                    <Row>
-                        <Col xs="4">
-                            <Label for="idProduct">ID del Producto</Label>
-                            <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" />
+            <Card>
+                <GridItem>
+                    <CardHeader color="info">
 
-                            <Label for="nameProduct">Nombre del Producto</Label>
-                            <Input className="mb-4" type="text" name="nameProduct" id="nameProduct" placeholder="" />
+                        <h4>Maestro Registro de Productos</h4>
 
-                            <Label for="precioUnitarioP">Precio Unitario</Label>
-                            <Input className="mb-4" type="text" name="precioUnitarioP" id="precioUnitarioP" placeholder="" />
+                    </CardHeader>
+                    <br />
 
+                    <Form>
+                        <Row>
+                            <Col xs="4">
+                                <Label for="idProduct">ID del Producto</Label>
+                                <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" />
 
-                            <Label for="estadoSelect">Estado en Inventario</Label>
+                                <Label for="nameProduct">Nombre del Producto</Label>
+                                <Input className="mb-4" type="text" name="nameProduct" id="nameProduct" placeholder="" />
 
-                            <Input className="mb-4" type="select" name="estadoSelect" id="estadoSelect">
-                                <option selected disabled hidden></option>
-                                <option>Disponible</option>
-                                <option>No Disponible</option>
-                            </Input>
-
-                            <Label for="cantidadDisponibleProd">Cantidad Disponible</Label>
-                            <Input className="mb-4" type="text" name="cantidadDisponibleProd" id="cantidadDisponibleProd" placeholder="" />
-                        </Col>
-
-                        <Col xs="7">
-                            <Label for="descripcionProd">Descripción</Label>
-                            <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" />
-                        </Col>
-                    </Row>
+                                <Label for="precioUnitarioP">Precio Unitario</Label>
+                                <Input className="mb-4" type="text" name="precioUnitarioP" id="precioUnitarioP" placeholder="" />
 
 
+                                <Label for="estadoSelect">Estado en Inventario</Label>
 
-                    <Row className="mb-4">
-                        <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                            <Button className="" color="primary" id="crearProd">Crear</Button>
-                        </Col>
+                                <Input className="mb-4" type="select" name="estadoSelect" id="estadoSelect">
+                                    <option selected disabled hidden></option>
+                                    <option>Disponible</option>
+                                    <option>No Disponible</option>
+                                </Input>
 
-                        <Col className="mt-3" sm={{ size: 'auto', offset: 0.2 }}>
-                            <Button className="" outline color="secondary" type="reset" id="limpiar">Limpiar</Button>
-                        </Col>
+                                <Label for="cantidadDisponibleProd">Cantidad Disponible</Label>
+                                <Input className="mb-4" type="text" name="cantidadDisponibleProd" id="cantidadDisponibleProd" placeholder="" />
+                            </Col>
 
-                    </Row>
+                            <Col xs="7">
+                                <Label for="descripcionProd">Descripción</Label>
+                                <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" />
+                            </Col>
+                        </Row>
 
-                </Form>
-            
-            </GridItem>
-            ///* </Container > */}
+
+
+                        <Row className="mb-4">
+                            <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
+                                <Button className="" color="primary" id="crearProd">Crear</Button>
+                            </Col>
+
+                            <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
+                                <Button className="" color="primary" id="crearProd">Limpiar</Button>
+                            </Col>
+
+                        </Row>
+
+                    </Form>
+
+
+                </GridItem>
+            </Card>
+
+
         )
     }
 }

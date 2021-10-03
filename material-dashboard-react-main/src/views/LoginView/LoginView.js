@@ -16,14 +16,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 const useStyles = makeStyles(styles);
-// const logostyle = {
-//    marginTop: '5%',
-//    width: '30%',
-//    heigth: 'auto',
-//    display: 'block',
-//    marginLeft: 'auto',
-//    marginRight: 'auto'
-// }
+
 
 export default function ComponenteLogin() {
    const classes = useStyles();
@@ -41,7 +34,7 @@ export default function ComponenteLogin() {
                   </p>
                </CardHeader>
                <CardBody>
-                  <img className='img-login-logo' src={logo} /> 
+                  <img className='img-login-logo' src={logo} />
                   <div className="container">
                      <div className="row text-center login-page">
                         <div className="col-md-12 login-form">
@@ -58,7 +51,7 @@ export default function ComponenteLogin() {
                                  </div>
                               </div>
 
-                              <br/>
+                              <br />
                               <div className="row">
                                  <div className="login-field">
                                     <input name="password" type="password" placeholder='password' required />
@@ -77,7 +70,6 @@ export default function ComponenteLogin() {
             </Card>
          </GridItem>
       </GridContainer>
-
 
    );
 }

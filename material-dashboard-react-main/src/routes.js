@@ -34,7 +34,7 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Home",
+    name: "Inicio",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/user",
