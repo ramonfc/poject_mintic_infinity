@@ -84,12 +84,12 @@ export default function Sidebar(props) {
   var brand = (
     <div className={classes.logo}>
       <a
-        href="/admin/dashboard"
+        href="/user/dashboard"
         //INFINITY WAS HERE
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive,
         })}
-        
+
       >
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />

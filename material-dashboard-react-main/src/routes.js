@@ -7,13 +7,18 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
+//import Person from "@material-ui/icons/Person";
+//import LibraryBooks from "@material-ui/icons/LibraryBooks";
+//import BubbleChart from "@material-ui/icons/BubbleChart";
+//import LocationOn from "@material-ui/icons/LocationOn";
+//import Notifications from "@material-ui/icons/Notifications";
+//import Unarchive from "@material-ui/icons/Unarchive";
+//import Language from "@material-ui/icons/Language";
+import Add from "@material-ui/icons/Add";
+import Create from "@material-ui/icons/Create";
+//import List from "@material-ui/icons/List";
+import { PersonAdd, ListAlt, People, ExitToApp, AccountCircle } from "@material-ui/icons";
+
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
@@ -32,63 +37,63 @@ const dashboardRoutes = [
     name: "Home",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/add-products",
     name: "Agregar Productos",
-    icon: Person,
+    icon: Add,
     component: UserProfile,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/list-products",
     name: "Listar Productos",
-    icon: "content_paste",
+    icon: ListAlt,
     component: TableList,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/create-sale",
     name: "Crear Venta",
-    icon: LibraryBooks,
+    icon: Create,
     component: Typography,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/list-sales",
-    name: "Listar Venta",
-    icon: BubbleChart,
+    name: "Listar Ventas",
+    icon: ListAlt,
     component: Icons,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/manage-users",
-    name: "Administrar usuarios",
-    icon: LocationOn,
+    name: "Crear Usuario",
+    icon: PersonAdd,
     component: Maps,
-    layout: "/admin",
+    layout: "/user",
   },
   {
-    path: "/notifications",
-    name: "Notificaciones",
-    icon: Notifications,
+    path: "/list-users",
+    name: "Listar Usuarios",
+    icon: People,
     component: NotificationsPage,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/logout",
     name: "Cerrar Sesion",
-    icon: Language,
+    icon: ExitToApp,
     component: RTLPage,
     layout: "/rtl",
   },
   {
     path: "/profile",
     name: "Mi Perfil",
-    icon: Unarchive,
+    icon: AccountCircle,
     component: UpgradeToPro,
-    layout: "/admin",
+    layout: "/user",
   },
 ];
 
