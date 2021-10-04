@@ -15,6 +15,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
+import Button from "@restart/ui/esm/Button";
 const useStyles = makeStyles(styles);
 
 
@@ -66,6 +67,17 @@ export default function ComponenteLogin() {
                         </div>
                      </div>
                   </div>
+
+
+
+                  <ul className='container'>
+                     <a href="#" className="insta">
+                        <Button>Google</Button>                     </a>
+                     <a href="#" className="twitter" >
+                        <span className="icon-twitter"></span>
+                        <Button>Facebook</Button>     
+                     </a>
+                  </ul>
                </CardBody>
             </Card>
          </GridItem>

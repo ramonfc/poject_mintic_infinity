@@ -131,7 +131,7 @@ class User extends React.Component {
           <Button 
             style={{ width:"100px", marginLeft:"420px"}}
             color="link"
-            onClick={() => this.mostrarModalActualizar()}
+            
           >
             Agregar producto
           </Button>

@@ -1,4 +1,5 @@
 import React from "react";
+import Carrusel from "../../components/Carrusel/Carrusel"
 // react plugin for creating charts
 // // import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -45,6 +46,7 @@ export default function Dashboard() {
   //const classes = useStyles();
   return (
     <div>
+      <Carrusel/>
       {/* <GridItem xs={12} sm={6} md={3}>
         <CardBody>
           <Table

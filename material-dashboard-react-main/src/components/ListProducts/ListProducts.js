@@ -165,7 +165,7 @@ class User extends React.Component {
                           onClick={() => this.mostrarModalActualizar(dato)}
                         >
                           Editar
-                        </Button>{" / "}
+                        </Button>
                         <Button color="link" onClick={() => this.eliminar(dato)}>Eliminar</Button>
                       </td>
                     </tr>

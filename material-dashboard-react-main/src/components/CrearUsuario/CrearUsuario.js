@@ -5,7 +5,7 @@ import { Form, Row, Col, Label, Input, Button } from "reactstrap"; //Container
 import "./CrearUsuario.css";
 import GridItem from "components/Grid/GridItem";
 
-import fotoperfilramon from '../../../src/assets/img/fotoperfil.jpg'
+import fotoperfilramon from '../../../src/assets/img/fotoperfil.png'
 
 export class FormRegProd extends Component {
     constructor(props) {
@@ -56,9 +56,9 @@ export class FormRegProd extends Component {
                                 <Input className="mb-4" type="text" name="descripcionProd" />
                                 <Label for="descripcionProd">Nombre de usuario</Label>
                                 <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Contraseña</Label>
+                                <Label for="descripcionProd">Rol</Label>
                                 <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Repetir Contraseña</Label>
+                                <Label for="descripcionProd">Contraseña</Label>
                                 <Input className="mb-4" type="text" name="descripcionProd" />
                             </Col>
                             <Col xs="4">

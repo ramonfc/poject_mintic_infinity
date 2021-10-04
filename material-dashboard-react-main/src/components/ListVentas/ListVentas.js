@@ -18,6 +18,13 @@ import {
 
 } from "reactstrap";
 
+const estiloboton = {
+
+  fontSize:"12px"
+
+}
+
+
 const data = [
 
   { idVenta: 1, idCliente: "123", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
@@ -138,11 +145,11 @@ class User extends React.Component {
             <Container>
               <Row className="Margen">
                 <Col className="mt-3">
-                  <Input type="text" name="buscarProd" idVenta="buscarProd" placeholder="Ingrese idVenta o nombre del" />
+                  <Input type="text" name="buscarProd" idVenta="buscarProd" placeholder="Ingrese id Venta" />
                 </Col>
 
                 <Col className="mt-3">
-                  <Button color="outline-primary" onClick={() => this.buscar()}>Buscar producto</Button>
+                  <Button color="outline-primary" onClick={() => this.buscar()}>Buscar Venta</Button>
                 </Col>
               </Row>
 
@@ -151,13 +158,13 @@ class User extends React.Component {
               <Table>
                 <thead>
                   <tr>
-                    <th>idVenta Venta</th>
-                    <th>idVenta Cliente</th>
+                    <th>idVenta</th>
+                    <th>idCliente</th>
                     <th>Nombre Cliente</th>
                     <th>Vendedor</th>
                     <th>Valor Total</th>
                     <th>Estado</th>
-                    <th>Fecha PedidVentao</th>
+                    <th>Fecha Pedido</th>
                     <th>Fecha Envio</th>
                     <th>Fecha Entrega</th>
                     <th>Acción</th>
@@ -178,12 +185,14 @@ class User extends React.Component {
                       <td>{dato.fechaEntrega}</td>
                       <td>
                         <Button
+                          style={estiloboton}
                           color="link"
                           onClick={() => this.mostrarModalActualizar(dato)}
                         >
                           Editar
-                        </Button>{" / "}
-                        <Button color="link" onClick={() => this.eliminar(dato)}>Eliminar</Button>
+                        </Button>
+                        
+                        <Button  style={estiloboton} color="link" onClick={() => this.eliminar(dato)}>Borrar</Button>
                       </td>
                     </tr>
                   ))}
@@ -199,7 +208,7 @@ class User extends React.Component {
               <ModalBody>
                 <FormGroup>
                   <label>
-                    idVenta Venta:
+                    idVenta:
                   </label>
 
                   <input
@@ -212,7 +221,7 @@ class User extends React.Component {
 
                 <FormGroup>
                   <label>
-                    idVenta Cliente:
+                    idCliente:
                   </label>
                   <input
                     className="form-control"
@@ -276,7 +285,7 @@ class User extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <label>
-                    Fecha PedidVentao:
+                    Fecha Pedido:
                   </label>
                   <input
                     className="form-control"

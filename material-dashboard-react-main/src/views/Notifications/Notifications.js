@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React from "react";
+import ListaUsuarios from "components/ListaUsuarios/ListaUsuarios";
 // // nodejs library to set properties for components
 // import PropTypes from "prop-types";
 // // @material-ui/core components
@@ -121,7 +122,9 @@ export default function Notifications() {
   //   }
   // };
   return (
-    <></>
+    <>
+      <ListaUsuarios/>
+    </>
     // <Card>
     //   <CardHeader color="primary">
     //     <h4 className={classes.cardTitleWhite}>Notifications</h4>
