@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React from "react";
+import ListVentas from '../../components/ListVentas/ListVentas'
 // // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // import Hidden from "@material-ui/core/Hidden";
@@ -17,7 +18,9 @@ import React from "react";
 export default function Icons() {
   //const classes = useStyles();
   return (
-    <></>
+    <>
+      <ListVentas/>
+    </>
     
     // <GridContainer>
     //   <GridItem xs={12} sm={12} md={12}>

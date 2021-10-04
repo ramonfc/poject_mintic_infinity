@@ -1,4 +1,5 @@
 import React from "react";
+import FormRegVentas from '../../components/FormRegVentas/FormRegVentas';
 // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // // core components
@@ -55,7 +56,11 @@ import React from "react";
 export default function TypographyPage() {
   //const classes = useStyles();
   return (
-    <></>
+    <>
+
+      <FormRegVentas/>
+
+    </>
     // <Card>
     //   <CardHeader color="primary">
     //     <h4 className={classes.cardTitleWhite}>Material Dashboard Heading</h4>

@@ -19,11 +19,13 @@ import {
 } from "reactstrap";
 
 const data = [
-  { id: 1, name: "Dulce de Guayaba", position: "Centro 2-10-1", status: "D", description: "Caja x 10", quantity: "1500" },
-  { id: 2, name: "Dulce de Kiwi", position: "Centro 2-8-1", status: "D", description: "Caja x 20", quantity: "2500" },
-  { id: 3, name: "Dulce de Arroz", position: "Centro 2-3-1", status: "D", description: "Caja x 20", quantity: "3000" },
-  { id: 4, name: "Dulce de Cidra", position: "Centro 2-14-11", status: "I", description: "Garrafa x 10 lt", quantity: "0" },
-  { id: 5, name: "Dulce de Maracuya", position: "Centro 2-10-17", status: "D", description: "Galon", quantity: "200" }
+
+  { idVenta: 1, idCliente: "123", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
+  { idVenta: 2, idCliente: "124", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
+  { idVenta: 3, idCliente: "125", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
+  { idVenta: 4, idCliente: "126", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
+  { idVenta: 5, idCliente: "127", nameCliente: "Pedro Pinta Paredes", vendedor: "Ramon", valorTotal: "$1.000.000.000", status: "Enviado", fechaPedidVentao:'15-11-2021', fechaEnvio:'16-11-2021',fechaEntrega:'20-11-2021'},
+
 ];
 
 class User extends React.Component {
@@ -36,12 +38,12 @@ class User extends React.Component {
       modalActualizar: false,
       modalInsertar: false,
       form: {
-        id: "",
+        idVenta: "",
         name: "",
         position: "",
         status: "",
-        description: "",
-        quantity: ""
+        idCliente: "",
+        nameCliente: ""
       }
     };
   }
@@ -68,9 +70,9 @@ class User extends React.Component {
     let contador = 0;
     let arregloProductos = this.state.data;
     arregloProductos.map((registro) => {
-      if (dato.id === registro.id) {
-        arregloProductos[contador].description = dato.description;
-        arregloProductos[contador].quantity = dato.quantity;
+      if (dato.idVenta === registro.idVenta) {
+        arregloProductos[contador].idCliente = dato.idCliente;
+        arregloProductos[contador].nameCliente = dato.nameCliente;
         arregloProductos[contador].name = dato.name;
         arregloProductos[contador].position = dato.position;
         arregloProductos[contador].status = dato.status;
@@ -82,12 +84,12 @@ class User extends React.Component {
   };
 
   eliminar = (dato) => {
-    let opcion = window.confirm("¿Está seguro que desea eliminar a " + dato.name + " " + dato.description + "?");
+    let opcion = window.confirm("¿Está seguro que desea eliminar a " + dato.name + " " + dato.idCliente + "?");
     if (opcion) {
       let contador = 0;
       let arregloProductos = this.state.data;
       arregloProductos.map((registro) => {
-        if (dato.id === registro.id) {
+        if (dato.idVenta === registro.idVenta) {
           arregloProductos.splice(contador, 1);
         }
         contador++;
@@ -99,12 +101,12 @@ class User extends React.Component {
   };
 
   buscar = (dato) => {
-      return dato + 'miguel';
+      return dato ;
   }
 
   insertar = () => {
     let usuarioACrear = { ...this.state.form };
-    usuarioACrear.id = this.state.data.length + 1;
+    usuarioACrear.idVenta = this.state.data.length + 1;
     let arregloProductos = this.state.data;
 
     arregloProductos.push(usuarioACrear);
@@ -130,13 +132,13 @@ class User extends React.Component {
           <GridItem>
             <CardHeader color="info">
 
-              <h4>Inventario de Productos</h4>
+              <h4>Listado de Ventas</h4>
 
             </CardHeader>
             <Container>
               <Row className="Margen">
                 <Col className="mt-3">
-                  <Input type="text" name="buscarProd" id="buscarProd" placeholder="Ingrese ID o nombre del" />
+                  <Input type="text" name="buscarProd" idVenta="buscarProd" placeholder="Ingrese idVenta o nombre del" />
                 </Col>
 
                 <Col className="mt-3">
@@ -149,25 +151,31 @@ class User extends React.Component {
               <Table>
                 <thead>
                   <tr>
-                    <th>Id del producto</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
+                    <th>idVenta Venta</th>
+                    <th>idVenta Cliente</th>
+                    <th>Nombre Cliente</th>
+                    <th>Vendedor</th>
+                    <th>Valor Total</th>
                     <th>Estado</th>
-                    <th>Ubicacion</th>
+                    <th>Fecha PedidVentao</th>
+                    <th>Fecha Envio</th>
+                    <th>Fecha Entrega</th>
                     <th>Acción</th>
                   </tr>
                 </thead>
-
+                
                 <tbody>
                   {this.state.data.map((dato) => (
-                    <tr key={dato.id}>
-                      <td>{dato.id}</td>
-                      <td>{dato.name}</td>
-                      <td>{dato.description}</td>
-                      <td>{dato.quantity}</td>
+                    <tr key={dato.idVenta}>
+                      <td>{dato.idVenta}</td>
+                      <td>{dato.idCliente}</td>
+                      <td>{dato.nameCliente}</td>
+                      <td>{dato.vendedor}</td>
+                      <td>{dato.valorTotal}</td>
                       <td>{dato.status}</td>
-                      <td>{dato.position}</td>
+                      <td>{dato.fechaPedidVentao}</td>
+                      <td>{dato.fechaEnvio}</td>
+                      <td>{dato.fechaEntrega}</td>
                       <td>
                         <Button
                           color="link"
@@ -185,26 +193,26 @@ class User extends React.Component {
 
             <Modal isOpen={this.state.modalActualizar}>
               <ModalHeader>
-                <div><h3>Actualizar producto {this.state.form.name}</h3></div>
+                <div><h3>Actualizar Venta {this.state.form.name}</h3></div>
               </ModalHeader>
 
               <ModalBody>
                 <FormGroup>
                   <label>
-                    Id del producto:
+                    idVenta Venta:
                   </label>
 
                   <input
                     className="form-control"
                     readOnly
                     type="text"
-                    value={this.state.form.id}
+                    value={this.state.form.idVenta}
                   />
                 </FormGroup>
 
                 <FormGroup>
                   <label>
-                    Nombre:
+                    idVenta Cliente:
                   </label>
                   <input
                     className="form-control"
@@ -218,33 +226,33 @@ class User extends React.Component {
 
                 <FormGroup>
                   <label>
-                    Descripcion:
+                    Nombre Cliente:
                   </label>
                   <input
                     className="form-control"
-                    name="description"
+                    name="idCliente"
                     type="text"
                     onChange={this.handleChange}
-                    value={this.state.form.description}
+                    value={this.state.form.idCliente}
                   />
                 </FormGroup>
 
                 <FormGroup>
                   <label>
-                    Cantidad:
+                    Vendedor:
                   </label>
                   <input
                     className="form-control"
-                    name="quantity"
+                    name="nameCliente"
                     type="text"
                     onChange={this.handleChange}
-                    value={this.state.form.quantity}
+                    value={this.state.form.nameCliente}
                   />
                 </FormGroup>
 
                 <FormGroup>
                   <label>
-                    Estado:
+                    Valor Total:
                   </label>
                   <input
                     className="form-control"
@@ -256,7 +264,43 @@ class User extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <label>
-                    Ubicacion:
+                    Estado:
+                  </label>
+                  <input
+                    className="form-control"
+                    name="position"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={this.state.form.position}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label>
+                    Fecha PedidVentao:
+                  </label>
+                  <input
+                    className="form-control"
+                    name="position"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={this.state.form.position}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label>
+                    Fecha Envio:
+                  </label>
+                  <input
+                    className="form-control"
+                    name="position"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={this.state.form.position}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label>
+                    Fecha Entrega:
                   </label>
                   <input
                     className="form-control"
@@ -293,7 +337,7 @@ class User extends React.Component {
               <ModalBody>
                 <FormGroup>
                   <label>
-                    Id:
+                    idVenta:
                   </label>
 
                   <input
@@ -323,7 +367,7 @@ class User extends React.Component {
                   </label>
                   <input
                     className="form-control"
-                    name="description"
+                    name="idCliente"
                     type="text"
                     onChange={this.handleChange}
                   />
@@ -331,11 +375,11 @@ class User extends React.Component {
 
                 <FormGroup>
                   <label>
-                    Cantidad:
+                    CantidVentaad:
                   </label>
                   <input
                     className="form-control"
-                    name="quantity"
+                    name="nameCliente"
                     type="text"
                     onChange={this.handleChange}
                   />

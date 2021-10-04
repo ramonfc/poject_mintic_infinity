@@ -16,7 +16,7 @@ export class FormRegProd extends Component {
                 <GridItem>
                     <CardHeader color="info">
 
-                        <h4>Maestro Registro de Productos</h4>
+                        <h4>Registro de Productos</h4>
 
                     </CardHeader>
                     <br />
