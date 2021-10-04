@@ -4,6 +4,7 @@ import './FormRegVentas.css'
 import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import GridItem from "components/Grid/GridItem";
+import ProductosVenta from '../../components/ProductosVenta/ProductosVenta'
 
 
 export class FormRegVentas extends Component {
@@ -22,7 +23,7 @@ export class FormRegVentas extends Component {
                        <br/ >
 
                         <Row id="formRegistroVentas">
-                            <Col id="inputs">
+                            <Col id="inputs" sm="8">
                                 <Label for="idVenta">ID de la Venta</Label>
                                 <Input className="mb-3" type="text" name="idProduct" placeholder="" />
 
@@ -74,15 +75,15 @@ export class FormRegVentas extends Component {
 
                             </Col>
 
-                            <Col id="vistaVentaosVenta">
+                            <Col id="TablaProductos" xs="1">
+
+                            <ProductosVenta/>
 
                             </Col>
 
                         </Row>
 
-                        <Row id="vistaDatosVenta">
-
-                        </Row>
+                        
 
                     </Container>
                     <br/>

@@ -1,7 +1,5 @@
 import React from 'react';
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import GridItem from "components/Grid/GridItem";
+
 
 import {
   Table,
@@ -126,13 +124,6 @@ class User extends React.Component {
 
     return (
       <>
-        <Card>
-          <GridItem>
-            <CardHeader color="info">
-
-              <h4>Inventario de Productos</h4>
-
-            </CardHeader>
             <Container>
               <Row className="Margen">
                 <Col className="mt-3">
@@ -380,8 +371,7 @@ class User extends React.Component {
                 </Button>
               </ModalFooter>
             </Modal>
-          </GridItem>
-        </Card>
+        
       </>
     );
   }

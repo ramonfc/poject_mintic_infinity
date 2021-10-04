@@ -1,5 +1,9 @@
+
 import React from "react";
 import ListProducts from '../../components/ListProducts/ListProducts.js'
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import GridItem from "components/Grid/GridItem";
 // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // // core components
@@ -46,7 +50,17 @@ export default function TableList() {
   //const classes = useStyles();
   return (
     <>
-    <ListProducts/>
+      <Card>
+        <GridItem>
+          <CardHeader color="info">
+
+            <h4>Inventario de Productos</h4>
+
+          </CardHeader>
+          <ListProducts />
+        </GridItem >
+      </Card>
+
     </>
     // <GridContainer>
     //   <GridItem xs={12} sm={12} md={12}>
