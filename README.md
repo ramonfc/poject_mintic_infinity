@@ -18,13 +18,13 @@ _Software application to control the virtual and physical sales of a manufacturi
 * Jhon Aldana
 
 ## Scrum roles
-|Rol | Sprint #1| Sprint #2|
-|--|--|--|
-|Analyst |Miguel Sánchez| Jhon Aldana | Wilson Fino
-|Database Administrator |Javier Bedoya| Miguel Sánchez | Jhon Aldana
+|Rol | Sprint #1| Sprint #2| Sprint #3
+|--|--|--|--|
+|Analyst |Miguel Sánchez| Jhon Aldana | Javier Bedoya
+|Database Administrator |Javier Bedoya| Wilson Fino| Jhon Aldana
 |Developer |All| All | All
 |Product Owner |Wilson Fino|Javier Bedoya | Ramón Castaño
-|Scrum Master |Ramón Castaño| Wilson Fino | Javier Bedoya
+|Scrum Master |Ramón Castaño| Wilson Fino | Miguel Sanchez
 
 
 
