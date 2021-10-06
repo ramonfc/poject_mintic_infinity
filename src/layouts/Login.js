@@ -78,10 +78,16 @@ export default function Admin() {
   // initialize and destroy the PerfectScrollbar plugin
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(mainPanel.current, {
+      try{
+         ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
         suppressScrollY: false,
       });
+      }
+      catch(error){
+        console.log("error atrapado" + error);
+      } 
+     
       document.body.style.overflow = "hidden";
     }
     window.addEventListener("resize", resizeFunction);
