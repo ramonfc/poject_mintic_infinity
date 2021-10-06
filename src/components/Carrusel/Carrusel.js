@@ -4,7 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 import Card from '../../components/Card/Card'
 import GridItem from 'components/Grid/GridItem';
 
-//imagenes
+// imagenes carrusel
 import muneca from '../../../src/assets/img/imagencarrusel.jpeg'
 import logo from '../../../src/assets/img/logoinfinity.png'
 
