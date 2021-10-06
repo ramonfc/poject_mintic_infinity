@@ -11,7 +11,7 @@ export class FormRegProd extends Component {
     }
     render() {
         return (
-            // <Container id="contenedor">
+            // <Container id="contenedor"> //No se está usando
             <Card>
                 <GridItem>
                     <CardHeader color="info">
