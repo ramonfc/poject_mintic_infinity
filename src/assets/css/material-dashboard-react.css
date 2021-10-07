@@ -508,3 +508,28 @@ footer ul li a:hover {
 * {
   letter-spacing: normal !important;
 }
+
+.textfield{
+    height: 32px;
+    width: 200px;
+    border: 1px solid #00bbff;
+    margin-right: 20px;
+  }
+    .textField:hover {
+      cursor: pointer;
+    }
+  
+    .btnUtil{
+      height: 34px;
+      width: 100px;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      margin-left: 50px;
+      margin-bottom: 50px;
+    }
+  
+    .barrabusqueda{
+      float: right;
+      padding: 20px;
+    }
