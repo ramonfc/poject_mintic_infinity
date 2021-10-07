@@ -5,7 +5,13 @@ import { Form, Row, Col, Label, Input, Button } from "reactstrap"; //Container
 import "./FormRegProd.css";
 import GridItem from "components/Grid/GridItem";
 import InputLbl from "components/InputLbl/InputLbl";
-import { FormGroup } from "@material-ui/core";
+import SelectCustom from "components/SelectCustom/SelectCustom";
+
+const options =[
+    {value: "disponible", label:"Disponible"},
+    {value: "noDisponible", label:"No Disponible"}
+];
+
 
 export class FormRegProd extends Component {
     constructor(props) {
@@ -23,28 +29,21 @@ export class FormRegProd extends Component {
                     </CardHeader>
                     <br />
 
-                    <Form>
+                    <Form >
                         <Row>
                             <Col xs="4">
                               {/*   <Label for="idProduct">ID del Producto</Label>
                                 <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" /> */}
 
-                                <InputLbl text= "ID del Producto" type="text" className="mb-4"/>
+                                <InputLbl text= "ID del Producto" type="text" className="mb-4" name="idProd"/>
 
-                                <InputLbl text= "Nombre del Producto" type="text" className="mb-4"/>
+                                <InputLbl text= "Nombre del Producto" type="text" className="mb-4" name="nombreProducto"/>
 
-                                <InputLbl text= "Precio Unitario" type="text" className="mb-4"/>
+                                <InputLbl text= "Precio Unitario" type="text" className="mb-4" name="precioUnitario"/>
 
-
-                                <Label for="estadoSelect">Estado en Inventario</Label>
-
-                                <Input className="mb-4" type="select" name="estadoSelect" id="estadoSelect">
-                                    <option selected disabled hidden></option>
-                                    <option>Disponible</option>
-                                    <option>No Disponible</option>
-                                </Input>
+                               <SelectCustom  options={options}  className="mb-4" text="Estado en Inventario" name="estadoInventario"/>
                                 
-                                <InputLbl text= "Cantidad Disponible" type="text" className="mb-4"/>
+                                <InputLbl text= "Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible"/>
                             
                             </Col>
 
@@ -52,7 +51,7 @@ export class FormRegProd extends Component {
                                 {/* <Label for="descripcionProd">Descripción</Label>
                                 <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" /> */}
                                                             
-                                <InputLbl text= "Descripción" type="textarea" className="descripcion" rows="15"/>
+                                <InputLbl text= "Descripción" type="textarea" className="descripcion" rows="15" name="descripcion"/>
                                 
                             </Col>
                         </Row>
@@ -61,11 +60,11 @@ export class FormRegProd extends Component {
 
                         <Row className="mb-4">
                             <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                <Button className="" color="primary" id="crearProd">Crear</Button>
+                                <Button className="" type="submit" color="primary" id="crearProd">Crear</Button>
                             </Col>
 
                             <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                <Button className="" color="primary" id="crearProd">Limpiar</Button>
+                                <Button className="" type="reset" color="primary" id="crearProd">Limpiar</Button>
                             </Col>
 
                         </Row>
