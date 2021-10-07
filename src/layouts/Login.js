@@ -86,15 +86,21 @@ export default function Admin() {
       }
       catch(error){
         console.log("error atrapado" + error);
+        
       } 
      
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "visible";
     }
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
-        ps.destroy();
+        try{
+          ps.destroy();
+        }catch(error){
+          console.log("error atrapado" + error);
+        }
+        
       }
       window.removeEventListener("resize", resizeFunction);
     };

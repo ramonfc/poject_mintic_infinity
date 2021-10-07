@@ -4,6 +4,8 @@ import CardHeader from "components/Card/CardHeader";
 import { Form, Row, Col, Label, Input, Button } from "reactstrap"; //Container
 import "./FormRegProd.css";
 import GridItem from "components/Grid/GridItem";
+import InputLbl from "components/InputLbl/InputLbl";
+import { FormGroup } from "@material-ui/core";
 
 export class FormRegProd extends Component {
     constructor(props) {
@@ -24,14 +26,14 @@ export class FormRegProd extends Component {
                     <Form>
                         <Row>
                             <Col xs="4">
-                                <Label for="idProduct">ID del Producto</Label>
-                                <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" />
+                              {/*   <Label for="idProduct">ID del Producto</Label>
+                                <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" /> */}
 
-                                <Label for="nameProduct">Nombre del Producto</Label>
-                                <Input className="mb-4" type="text" name="nameProduct" id="nameProduct" placeholder="" />
+                                <InputLbl text= "ID del Producto" type="text" className="mb-4"/>
 
-                                <Label for="precioUnitarioP">Precio Unitario</Label>
-                                <Input className="mb-4" type="text" name="precioUnitarioP" id="precioUnitarioP" placeholder="" />
+                                <InputLbl text= "Nombre del Producto" type="text" className="mb-4"/>
+
+                                <InputLbl text= "Precio Unitario" type="text" className="mb-4"/>
 
 
                                 <Label for="estadoSelect">Estado en Inventario</Label>
@@ -41,14 +43,17 @@ export class FormRegProd extends Component {
                                     <option>Disponible</option>
                                     <option>No Disponible</option>
                                 </Input>
-
-                                <Label for="cantidadDisponibleProd">Cantidad Disponible</Label>
-                                <Input className="mb-4" type="text" name="cantidadDisponibleProd" id="cantidadDisponibleProd" placeholder="" />
+                                
+                                <InputLbl text= "Cantidad Disponible" type="text" className="mb-4"/>
+                            
                             </Col>
 
                             <Col xs="7">
-                                <Label for="descripcionProd">Descripción</Label>
-                                <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" />
+                                {/* <Label for="descripcionProd">Descripción</Label>
+                                <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" /> */}
+                                                            
+                                <InputLbl text= "Descripción" type="textarea" className="descripcion" rows="15"/>
+                                
                             </Col>
                         </Row>
 
