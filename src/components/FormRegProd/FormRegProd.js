@@ -13,8 +13,9 @@ const options = [
 ];
 
 
-//const BASE_URL = process.env.REACT_APP_API_URL;
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+console.log(BASE_URL);
+//const BASE_URL = "http://localhost:3000/";
 const PATH_PRODUCTS = 'products';
 
 export class FormRegProd extends Component {
@@ -75,6 +76,15 @@ export class FormRegProd extends Component {
         });
     };
 
+    handleSelectChange = (value) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                estadoProdInv: value,
+            },
+        });
+    }
+
     render() {
         return (
             // <Container id="contenedor"> //No se está usando
@@ -99,14 +109,14 @@ export class FormRegProd extends Component {
 
                                 <InputLbl text="Precio Unitario" type="text" className="mb-4" name="precioUnitario" onChange={this.handleChange} value={this.state.form.precioUnitario} />
 
-                                {/* <SelectCustom options={options} className="mb-4" text="Estado en Inventario" name="estadoProdInv"  value={this.state.form.estadoProdInv} /> */}
+                               {/*  <SelectCustom options={options} className="mb-4" text="Estado en Inventario" name="estadoProdInv"  handleChange={this. handleSelectChange} /> */}
 
-                                <Label  >Estado en Inventario</Label>
+                                 <Label  >Estado en Inventario</Label>
                                 <select type="select" name="estadoProdInv" onChange={this.handleChange} value={this.state.form.estadoProdInv} className="mb-4">
                                 <option value=""></option>
                                     <option value="disponible">Disponible</option>
                                     <option value="noDisponible">No Disponible</option>                                    
-                                </select>
+                                </select> 
 
                                 <InputLbl text="Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible" onChange={this.handleChange} value={this.state.form.cantidadDisponible} />
 
@@ -169,15 +179,16 @@ export class FormRegProd extends Component {
             body: JSON.stringify(productoACrear)
         };
 
-        console.log(requestOptions);
-        alert("Producto creado exitosamente");
+        //console.log(requestOptions);
+        //alert("Producto creado exitosamente");
+        alert("Espera")
 
         fetch(`${BASE_URL}${PATH_PRODUCTS}`, requestOptions)
             .then(result => result.json())
             .then(
                 (result) => {
-                    this.cargarProducts();
-                    console.log(result)
+                    //this.cargarProducts();
+                    console.log("result: ", result)
                 },
                 (error) => {
                     console.log(error);

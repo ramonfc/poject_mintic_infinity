@@ -79,56 +79,41 @@ const paginacionopciones = {
 class ListProducts1 extends Component {
 
     constructor(props){
-       super(props) ;
-
+       super(props);
+       
        this.state = {
-        busqueda:'',
-        productos:[],
-        editar: 'false',
-        borrar: 'false',
-        data:[]         
-    }
-    }
-
-   
-
-    onChange=async e=>{
-        e.persist();
-        await this.setState({busqueda: e.target.value});
-        //this.setState({productos:  this.cargarProductos()});
-        this.filtrarproductos();
+            busqueda:'',
+            productos:[],
+            productosFiltrados: [],
+            editar: 'false',
+            borrar: 'false',
+            data:[]         
+        };
     }
 
-    filtrarproductos=()=> {
-       // this.setState({productos:  this.cargarProductos()});
+    componentDidMount() {
+        this.cargarProductos();
+    } 
+
+    onChange = event => {
+        this.setState({busqueda: event.target.value});
+        this.filtrarproductos(event.target.value);
+    }
+
+    filtrarproductos = (busqueda) => {
         try{
-            var data1= this.cargarProductos();
-            console.log(this.state.data)
-            var search=(this.state.data).filter(item=>{
-                if(item.nombreProducto.includes(this.state.busqueda) ||
-                item.descripcionProducto.includes(this.state.busqueda) ||
-                    item.sku.includes(this.state.busqueda)){
-                        console.log("aqui")
-                    return item;
-                }
+            var search = this.state.productos.filter(item => {
+                return item.nombreProducto.includes(busqueda) ||
+                item.descripcionProducto.includes(busqueda) ||
+                    item.sku.includes(busqueda);
             });
-            console.log(search);
-            this.setState({productos: search});
+            this.setState({productosFiltrados: search});
         }catch(error){
             console.log(error);
         }
     }
 
-    componentDidMount() {
-       
-        this.setState({productos: this.cargarProductos()} ); 
-       
-        var p= this.state.productos;
-        console.log("p: ",p);
-        //this.cargarProductos();
-        console.log("productos: ",this.state.productos);
-        console.log("data: ", this.state.data);
-    } 
+    
 
     handleChange=e=> {
         this.setState({editar: this.selectableRowsComponent});
@@ -137,9 +122,15 @@ class ListProducts1 extends Component {
         this.setState.disabled;
     }
 
-    cargarProductos() {
-        
-        fetch(`${BASE_URL}${PATH_PRODUCTS}`)
+    async cargarProductos() {
+        const response = await fetch(`${BASE_URL}${PATH_PRODUCTS}`);
+        const result = await response.json();
+        this.setState({
+            productos: result,
+            productosFiltrados: result,
+        });
+
+        /* fetch(`${BASE_URL}${PATH_PRODUCTS}`)
           .then(result => result.json())
           .then(
             (result) => {
@@ -156,7 +147,7 @@ class ListProducts1 extends Component {
             (error) => {
               console.log(error);
             }
-          )
+          ) */
       }
 
     render() {
@@ -178,7 +169,7 @@ class ListProducts1 extends Component {
 
                 <DataTable
                     columns={columnas}
-                    data={this.state.productos}
+                    data={this.state.productosFiltrados}
                     pagination
                     paginationComponentOptions={paginacionopciones}
                     fixedHeader

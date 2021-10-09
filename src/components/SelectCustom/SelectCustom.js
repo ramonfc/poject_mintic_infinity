@@ -12,7 +12,8 @@ export class SelectCustom extends Component {
 
     handleChange = (selectedOptionUser) => {
         this.setState({ selectedOption: selectedOptionUser });
-        console.log(`Option selected:`, selectedOptionUser);
+        this.props.handleChange(selectedOptionUser);
+        //console.log(`Option selected:`, selectedOptionUser);
     };
 
     render() {
