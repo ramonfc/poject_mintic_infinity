@@ -15,7 +15,8 @@ function InputLbl(props) {
         return (
             <div>
                 <Label for={props.for}>{props.text}</Label>
-                <Input className={props.className} type={props.type} name={props.name} placeholder={props.placeholder} rows={props.rows}> </Input>
+                <Input className={props.className} type={props.type} name={props.name} placeholder={props.placeholder} rows={props.rows} 
+                value={props.value} onChange={props.onChange}> </Input>
             </div>
         )
 }
