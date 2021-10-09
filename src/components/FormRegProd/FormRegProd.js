@@ -181,14 +181,16 @@ export class FormRegProd extends Component {
 
         //console.log(requestOptions);
         //alert("Producto creado exitosamente");
-        alert("Espera")
+        
 
         fetch(`${BASE_URL}${PATH_PRODUCTS}`, requestOptions)
             .then(result => result.json())
             .then(
                 (result) => {
                     //this.cargarProducts();
-                    console.log("result: ", result)
+                    console.log("result: ", result);
+                    alert("Espera")
+                    this.cargarProducts();
                 },
                 (error) => {
                     console.log(error);
