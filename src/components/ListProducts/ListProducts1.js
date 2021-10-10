@@ -28,8 +28,9 @@ import { CheckBox } from '@material-ui/icons';
 
 ];  */
 
-//const BASE_URL = process.env.REACT_APP_API_URL;
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+//const BASE_URL = "http://localhost:3000/";
+console.log(BASE_URL);
 const PATH_PRODUCTS = 'products';
 
 const columnas = [

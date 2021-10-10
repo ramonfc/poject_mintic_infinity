@@ -6,6 +6,7 @@ import "./FormRegProd.css";
 import GridItem from "components/Grid/GridItem";
 import InputLbl from "components/InputLbl/InputLbl";
 import SelectCustom from "components/SelectCustom/SelectCustom";
+import InputLblReq from "components/InputLblReq/InputLblReq";
 
 const options = [
     { value: "disponible", label: "Disponible" },
@@ -100,8 +101,8 @@ export class FormRegProd extends Component {
                     <Form >
                         <Row>
                             <Col xs="4">
-                                {/*   <Label for="idProduct">ID del Producto</Label>
-                                <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" /> */}
+                                {/*   <Label for="sku">ID del Producto</Label>
+                                <Input className="mb-4" type="text" name="sku" id="idProduct" placeholder="" required/> */}
 
                                 <InputLbl text="ID del Producto" type="text" className="mb-4" name="sku" onChange={this.handleChange} value={this.state.form.sku} />
 
