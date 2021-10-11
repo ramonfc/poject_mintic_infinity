@@ -190,7 +190,7 @@ export class FormRegProd extends Component {
                 (result) => {
                     //this.cargarProducts();
                     console.log("result: ", result);
-                    alert("Espera")
+                    alert("Producto creado")
                     this.cargarProducts();
                 },
                 (error) => {

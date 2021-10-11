@@ -196,5 +196,4 @@ class ListProducts1 extends Component {
 
 
 
-
 export default ListProducts1;
