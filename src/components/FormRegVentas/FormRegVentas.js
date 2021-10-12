@@ -1,13 +1,90 @@
 import React, { Component } from 'react'
-import { Row, Col, Label, Input, Button, Container } from 'reactstrap';
+import { Row, Col, Button, Container, Form, Label } from 'reactstrap';
 import './FormRegVentas.css'
 import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import GridItem from "components/Grid/GridItem";
 import ProductosVenta from '../../components/ProductosVenta/ProductosVenta'
+import InputLbl from "components/InputLbl/InputLbl";
+import SelectCustom from 'components/SelectCustom/SelectCustom';
 
+
+const options =[
+    {value: "proceso", label:"En Proceso"},
+    {value: "entregada", label:"Entregada"},
+    {value: "cancelada", label:"Cancelada"}
+];
+
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const PATH_VENTAS= "ventas"
 
 export class FormRegVentas extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: [],
+            modalActualizar: false,
+            modalInsertar: false,
+            form: {            
+                idVendedor:"",
+                valorTotal:0,
+                estadoVenta: "",
+                idCliente:"",
+                nombreCliente:"",
+                fechaVenta:"",
+                fechaEnvio:"",
+                fechaEntrega:""
+            }
+        };
+
+    }
+
+    insertar = () => {
+
+        this.setState({
+            form: {
+                idVendedor:"",
+                nombreVendedor:"",
+                valorTotal:0,
+                estadoVenta: "",
+                idCliente:"",
+                nombreCliente:"",
+                fechaVenta:"",
+                fechaEnvio:"",
+                fechaEntrega:""
+            }
+        });
+
+        let ventaACrear = { ...this.state.form };
+        console.log(ventaACrear);
+        
+
+        this.crearVenta(ventaACrear);
+        /* this.setState({ modalInsertar: false }); */
+    }
+
+
+    handleChange = (e) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                [e.target.name]: e.target.value,
+            },
+        });
+    };
+
+    handleSelectChange = (value) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                estadoProdInv: value,
+            },
+        });
+    }
+
     render() {
         return (
 
@@ -22,56 +99,62 @@ export class FormRegVentas extends Component {
                     <Container>
                        <br/ >
 
-                        <Row id="formRegistroVentas">
+                        <Row id="vistaVentas">                            
+
                             <Col id="inputs" sm="8">
-                                <Label for="idVenta">ID de la Venta</Label>
-                                <Input className="mb-3" type="text" name="idProduct" placeholder="" />
-
-                                <Label for="valorTotal">Valor Total</Label>
-                                <Input className="mb-3" type="text" name="valorTotal" placeholder="" />
 
 
-                                <Label for="estadoSelectVenta">Estado de la Venta</Label>
+                            <Form>
+                               {/*  <Label for="idVenta">ID de la Venta</Label>
+                                <Input className="mb-3" type="text" name="idProduct" placeholder="" /> */}
 
-                                <Input className="mb-3" type="select" name="estadoSelectVenta">
-                                    <option selected disabled hidden></option>
-                                    <option>En Proceso</option>
-                                    <option>Entregada</option>
-                                    <option>Cancelada</option>
-                                </Input>
+                                {/* <InputLbl text="ID de la Venta" type="text"  className="mb-3" name="idVenta"/> */}
+                                
+                                <InputLbl text="ID del Vendedor" type="text"  className="mb-3" name="idVendedor"/>
 
-                                <Label for="idCliente">ID del Cliente</Label>
-                                <Input className="mb-3" type="text" name="idCliente" placeholder="" />
+                                <InputLbl text="Nombre del Vendedor" type="text"  className="mb-3" name="nombreVendedor"/>
 
-                                <Label for="nombreCliente">Nombre del Cliente</Label>
-                                <Input className="mb-3" type="text" name="nombreCliente" placeholder="" />
+                                <InputLbl text="Valor Total" type="text"  className="mb-3" name="valorTotal"/>
 
-                                <Label for="fechaVenta">Fecha de la Venta</Label>
-                                <Input className="mb-3" type="text" name="fechaVenta" placeholder="" />
+                                {/* <SelectCustom options={options}  className="mb-3" text="Estado de la Venta" name="estadoVenta"/> */}
+                                <Label  >Estado de la Venta</Label>
+                                <select type="select" name="estadoVenta" onChange={this.handleChange} value={this.state.form.estadoVenta} className="mb-3">
+                                <option value=""></option>
+                                    <option value="proceso">En Proceso</option>
+                                    <option value="cancelada">Cancelada</option> 
+                                    <option value="entregada">Entregada</option>                                   
+                                </select> 
+
+                                <InputLbl text="ID del Cliente" type="text"  className="mb-3" name="idCliente"/>
+
+                                <InputLbl text="Nombre del Cliente" type="text"  className="mb-3" name="nombreCliente"/>                               
+
+                                <InputLbl text="Fecha de la venta" type="date"  className="mb-3" name="fechaVenta"/>
 
 
                                 <Row className="fechas">
-                                    <Col>
-                                        <Label className="fecha2" for="fechaEnvio">Fecha del Envio</Label>
-                                        <Input className="mb-3" type="text" name="fechaEnvio" placeholder="" />
+                                    <Col>                            
+                                        <InputLbl text="Fecha del Envío" type="date"  className="mb-3" name="fechaEnvio"/>
                                     </Col>
 
-                                    <Col>
-                                        <Label className="fecha2" for="fechaEntrega">Fecha de Entrega</Label>
-                                        <Input className="mb-3" type="text" name="fechaEntrega" placeholder="" />
+                                    <Col>                                    
+                                        <InputLbl text="Fecha de Entrega" type="date"  className="mb-3" name="fechaEntrega"/>
                                     </Col>
 
                                 </Row>
 
                                 <Row>
                                     <Col>
-                                        <Button className="" color="primary" id="crearProd">Registrar</Button>
+                                        <Button className="" type="submit" color="primary" id="crearProd">Registrar</Button>
                                     </Col>
 
                                     <Col>
                                         <Button className="" outline color="secondary" type="reset" id="limpiar">Limpiar</Button>
                                     </Col>
                                 </Row>
+
+                                </Form>
+
 
                             </Col>
 
@@ -82,7 +165,6 @@ export class FormRegVentas extends Component {
                             </Col>
 
                         </Row>
-
                         
 
                     </Container>
@@ -91,6 +173,52 @@ export class FormRegVentas extends Component {
             </Card>
 
         )
+    }
+    
+
+    cargarVentas() {
+        fetch(`${BASE_URL}${PATH_VENTAS}`)
+            .then(result => result.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        data: result
+                    });
+                },
+                // Nota: es importante manejar errores aquí y no en 
+                // un bloque catch() para que no interceptemos errores
+                // de errores reales en los componentes.
+                (error) => {
+                    console.log(error);
+                }
+            )
+    }
+
+    crearVenta(ventaACrear) {
+        // Simple POST request with a JSON body using fetch
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ventaACrear)
+        };
+
+        //console.log(requestOptions);
+        //alert("Producto creado exitosamente");
+        
+
+        fetch(`${BASE_URL}${PATH_VENTAS}`, requestOptions)
+            .then(result => result.json())
+            .then(
+                (result) => {
+                    //this.cargarProducts();
+                    console.log("result: ", result);
+                    alert("Espera")
+                    this.cargarVentas();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
 }
 

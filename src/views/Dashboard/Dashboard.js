@@ -1,3 +1,4 @@
+import FormPrueba from "components/FormPrueba/FormPrueba";
 import React from "react";
 import Carrusel from "../../components/Carrusel/Carrusel"
 // react plugin for creating charts
@@ -47,6 +48,7 @@ export default function Dashboard() {
   return (
     <div>
       <Carrusel/>
+      <FormPrueba/>
       {/* <GridItem xs={12} sm={6} md={3}>
         <CardBody>
           <Table

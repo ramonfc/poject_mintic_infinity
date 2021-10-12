@@ -6,7 +6,14 @@ import "./CrearUsuario.css";
 import GridItem from "components/Grid/GridItem";
 
 import fotoperfilramon from '../../../src/assets/img/fotoperfil.png'
+import InputLbl from "components/InputLbl/InputLbl";
+import SelectCustom from "components/SelectCustom/SelectCustom";
 
+const options = [
+    { value: "cc", label: "Cédula de Ciudadanía" },
+    { value: "ce", label: "Cédula de Extranjería" },
+    { value: "pasaporte", label: "Pasaporte" }
+];
 export class FormRegProd extends Component {
     constructor(props) {
         super(props);
@@ -26,53 +33,44 @@ export class FormRegProd extends Component {
                     <Form>
                         <Row>
                             <Col xs="4">
-                                <Label for="idProduct">Nombre(s)</Label>
-                                <Input className="mb-4" type="text" name="idProduct" id="idProduct" placeholder="" />
 
-                                <Label for="nameProduct">Apellidos</Label>
-                                <Input className="mb-4" type="text" name="nameProduct" id="nameProduct" placeholder="" />
-                                <Label for="estadoSelect">Tipo de documento</Label>
+                                <InputLbl type="text" name="nombres" className="mb-4" text="Nombre(s)" />
 
-                                <Input className="mb-4" type="select" name="estadoSelect" id="estadoSelect">
-                                    <option selected disabled hidden></option>
-                                    <option>Cedula de Ciudadania</option>
-                                    <option>Cedula de Extranjeria</option>
-                                    <option>Pasaporte</option>
-                                    <option>Tarjeta de Identidad</option>
-                                </Input>
-                                <Label for="estadoSelect">Numero de Documento</Label>
-                                <Label for="precioUnitarioP"></Label>
-                                <Input className="mb-4" type="text" name="precioUnitarioP" id="precioUnitarioP" placeholder="" />
+                                <InputLbl type="text" name="apellidos" className="mb-4" text="Apellidos" />
 
+                                <SelectCustom options={options} className="mb-4" text="Tipo de Documento" name="tipoDoc" />
 
-                                <Label for="cantidadDisponibleProd">Nombre de Usuario</Label>
-                                <Input className="mb-4" type="text" name="cantidadDisponibleProd" id="cantidadDisponibleProd" placeholder="" />
+                                <InputLbl type="text" name="numeroDoc" className="mb-4" text="Número de Documento" />
+
+                                <InputLbl type="text" name="direccion" className="mb-4" text="Dirección" />
+
                             </Col>
 
                             <Col xs="4">
-                                <Label for="descripcionProd">Direccion</Label>
-                                <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Telefono</Label>
-                                <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Nombre de usuario</Label>
-                                <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Rol</Label>
-                                <Input className="mb-4" type="text" name="descripcionProd" />
-                                <Label for="descripcionProd">Contraseña</Label>
-                                <Input className="mb-4" type="text" name="descripcionProd" />
+
+                                <InputLbl type="text" name="telefono" className="mb-4" text="Teléfono" />
+
+                                <InputLbl type="text" name="nombreUsuario" className="mb-4" text="Nombre de Usuario" />
+
+                                <InputLbl type="text" name="psw" className="mb-4" text="Contraseña" />
+
+                                <InputLbl type="text" name="rol" className="mb-4" text="Rol" />
+
+                                
                             </Col>
+
                             <Col xs="4">
                                 <br />
                                 <img src={fotoperfilramon} style={{ width: "80%", height: "80%" }} />
-                                
+
                                 <Row className="mb-4">
-                                <br />
-                                    <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                        <Button className="" color="primary" id="crearProd">Subir Foto</Button>
+                                    <br />
+                                    <Col className="mt-3">
+                                        <Button className="" type="submit" color="primary">Subir Foto</Button>
                                     </Col>
 
-                                    <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                        <Button className="" color="primary" id="crearProd">Borrar Foto</Button>
+                                    <Col className="mt-3">
+                                        <Button className="" type="submit" color="primary">Borrar Foto</Button>
                                     </Col>
 
                                 </Row>
@@ -81,13 +79,13 @@ export class FormRegProd extends Component {
 
 
 
-                        <Row className="mb-4">
-                            <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                <Button className="" color="primary" id="crearProd">Crear</Button>
+                        <Row className="mb-4 mt-5">
+                            <Col className="mt-3">
+                                <Button className="" type="submit" color="primary">Crear</Button>
                             </Col>
 
-                            <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                <Button className="" color="primary" id="crearProd">Limpiar</Button>
+                            <Col className="mt-3">
+                                <Button className="" type="reset" color="primary">Limpiar</Button>
                             </Col>
 
                         </Row>
