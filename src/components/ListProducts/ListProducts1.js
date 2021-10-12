@@ -175,6 +175,7 @@ class ListProducts1 extends Component {
                     paginationComponentOptions={paginacionopciones}
                     fixedHeader
                     selectableRows
+                    selectableRowsHighlight
                     selectableRowsComponent={this.selectableRowsComponent}
                     onSelectedRowsChange={this.handleChange}
                     fixedHeaderScrollHeight="600px"
