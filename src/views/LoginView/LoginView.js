@@ -69,7 +69,6 @@ export default function ComponenteLogin() {
                   </div>
 
 
-
                   <ul className='container'>
                      <a href="#" className="insta">
                         <Button>Google</Button>                     </a>

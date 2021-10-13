@@ -34,25 +34,25 @@ export class FormRegProd extends Component {
                         <Row>
                             <Col xs="4">
 
-                                <InputLbl type="text" name="nombres" className="mb-4" text="Nombre(s)" />
+                                <InputLbl type="text" name="name" className="mb-4" text="Nombre(s)" />
 
-                                <InputLbl type="text" name="apellidos" className="mb-4" text="Apellidos" />
+                                <InputLbl type="text" name="lastName" className="mb-4" text="Apellidos" />
 
-                                <SelectCustom options={options} className="mb-4" text="Tipo de Documento" name="tipoDoc" />
+                                <SelectCustom options={options} className="mb-4" text="Tipo de Documento" name="docType" />
 
-                                <InputLbl type="text" name="numeroDoc" className="mb-4" text="Número de Documento" />
+                                <InputLbl type="text" name="documentId" className="mb-4" text="Número de Documento" />
 
-                                <InputLbl type="text" name="direccion" className="mb-4" text="Dirección" />
+                                <InputLbl type="text" name="address" className="mb-4" text="Dirección" />
 
                             </Col>
 
                             <Col xs="4">
 
-                                <InputLbl type="text" name="telefono" className="mb-4" text="Teléfono" />
+                                <InputLbl type="text" name="telephone" className="mb-4" text="Teléfono" />
 
-                                <InputLbl type="text" name="nombreUsuario" className="mb-4" text="Nombre de Usuario" />
+                                <InputLbl type="text" name="username" className="mb-4" text="Nombre de Usuario" />
 
-                                <InputLbl type="text" name="psw" className="mb-4" text="Contraseña" />
+                                <InputLbl type="text" name="password" className="mb-4" text="Contraseña" />
 
                                 <InputLbl type="text" name="rol" className="mb-4" text="Rol" />
 
