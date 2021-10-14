@@ -21,9 +21,19 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router";
+import { getAuth } from "firebase/auth";
+
+
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
+
+  const auth = getAuth();
+  const [user, loading, error] = useAuthState(auth);
+  const history = useHistory();
+
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
@@ -44,6 +54,25 @@ export default function AdminNavbarLinks() {
       setOpenProfile(event.currentTarget);
     }
   };
+
+  const logout = () => {
+
+    auth.signOut().then(function () {
+      // Sign-out successful.
+      console.log("loggedout");
+    }).catch((error) => {
+      // An error happened.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+  };  
+
+  React.useEffect(() => {
+    if (loading) return;
+    if (!user) return history.replace("/");
+  }, [user, loading]);
+
+
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
@@ -207,7 +236,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={logout}
                       className={classes.dropdownItem}
                     >
                       Logout

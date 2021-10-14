@@ -86,7 +86,7 @@ export {
   auth,
   signInEmailAndPassword,
   registerWithEmailAndPassword,
-  sendPasswordResetEmail,
+  //sendPasswordResetEmail,
   signInWithGoogle,
   logout,
 };
