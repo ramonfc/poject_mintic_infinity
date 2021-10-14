@@ -5,6 +5,7 @@ import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import GridItem from "components/Grid/GridItem";
 import ProductosVenta from '../../components/ProductosVenta/ProductosVenta'
+import ProductsToAdd from '../../components/ProductosVenta/ProductsToAdd'
 import InputLbl from "components/InputLbl/InputLbl";
 import SelectCustom from 'components/SelectCustom/SelectCustom';
 

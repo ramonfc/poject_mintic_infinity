@@ -7,6 +7,7 @@ import GridItem from "components/Grid/GridItem";
 import InputLbl from "components/InputLbl/InputLbl";
 import SelectCustom from "components/SelectCustom/SelectCustom";
 import InputLblReq from "components/InputLblReq/InputLblReq";
+import { WindowsBalloon } from "node-notifier";
 
 const options = [
     { value: "disponible", label: "Disponible" },
@@ -15,7 +16,6 @@ const options = [
 
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-console.log(BASE_URL);
 //const BASE_URL = "http://localhost:3000/";
 const PATH_PRODUCTS = 'products';
 
@@ -60,11 +60,54 @@ export class FormRegProd extends Component {
 
         let productoACrear = { ...this.state.form };
         console.log(productoACrear);
+
         
-
         this.crearProducto(productoACrear);
-        /* this.setState({ modalInsertar: false }); */
+    }
 
+    onChange (e) {
+
+        let productoACrear = { ...this.state.form };
+        if(this.validateFields(productoACrear) === 0) {
+
+            this.insertar(productoACrear);
+        // this.setState({ modalInsertar: false }); 
+        }
+        else {
+            e.preventDefault();
+        }
+    } 
+
+    validateFields(productoACrear) {
+
+        let p = 0;
+
+        if (productoACrear.sku === "") {
+            alert("El campo SKU es requerido"); 
+            p += 1;
+        }
+
+        if (productoACrear.nombreProducto === "") {
+            alert("El campo nombreProducto es requerido");
+            p += 1; 
+        }
+
+        if (productoACrear.precioUnitario < 0) {
+            alert("El campo Precio Unitario debe ser mayoy o igual a 0"); 
+            p += 1;
+        }
+
+        if (productoACrear.cantidadDisponible < 0) {
+            alert("El campo cantidad Disponible debe ser mayoy o igual a 0");
+            p += 1; 
+        }
+
+        if (productoACrear.descripcionProducto === "") {
+            alert("El campo Descripcion del Producto es requerido");
+            p += 1; 
+        }
+
+        return p
     }
 
 
@@ -104,22 +147,22 @@ export class FormRegProd extends Component {
                                 {/*   <Label for="sku">ID del Producto</Label>
                                 <Input className="mb-4" type="text" name="sku" id="idProduct" placeholder="" required/> */}
 
-                                <InputLbl text="ID del Producto" type="text" className="mb-4" name="sku" onChange={this.handleChange} value={this.state.form.sku} />
+                                <InputLbl text="ID del Producto" type="text" className="mb-4" name="sku" onChange={this.handleChange}  />
 
-                                <InputLbl text="Nombre del Producto" type="text" className="mb-4" name="nombreProducto" onChange={this.handleChange} value={this.state.form.nombreProducto} />
+                                <InputLbl text="Nombre del Producto" type="text" className="mb-4" name="nombreProducto" onChange={this.handleChange}  />
 
-                                <InputLbl text="Precio Unitario" type="text" className="mb-4" name="precioUnitario" onChange={this.handleChange} value={this.state.form.precioUnitario} />
+                                <InputLbl text="Precio Unitario" type="text" className="mb-4" name="precioUnitario" onChange={this.handleChange}  />
 
                                {/*  <SelectCustom options={options} className="mb-4" text="Estado en Inventario" name="estadoProdInv"  handleChange={this. handleSelectChange} /> */}
 
                                  <Label  >Estado en Inventario</Label>
                                 <select type="select" name="estadoProdInv" onChange={this.handleChange} value={this.state.form.estadoProdInv} className="mb-4">
                                 <option value=""></option>
-                                    <option value="disponible">Disponible</option>
-                                    <option value="noDisponible">No Disponible</option>                                    
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="No Disponible">No Disponible</option>                                    
                                 </select> 
 
-                                <InputLbl text="Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible" onChange={this.handleChange} value={this.state.form.cantidadDisponible} />
+                                <InputLbl text="Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible" onChange={this.handleChange}  />
 
                             </Col>
 
@@ -127,14 +170,14 @@ export class FormRegProd extends Component {
                                 {/* <Label for="descripcionProd">Descripción</Label>
                                 <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" /> */}
 
-                                <InputLbl text="Descripción" type="textarea" className="descripcion" rows="15" name="descripcionProducto" onChange={this.handleChange} value={this.state.form.descripcionProducto} />
+                                <InputLbl text="Descripción" type="textarea" className="descripcion" rows="15" name="descripcionProducto" onChange={this.handleChange}  />
 
                             </Col>
                         </Row>
 
                         <Row className="mb-4">
                             <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
-                                <Button className="" type="submit" color="primary" id="crearProd" onClick={() => this.insertar()} >Crear</Button>
+                                <Button className="" type="submit" color="primary" id="crearProd" onClick={(e) => this.onChange(e)} >Crear</Button>
                             </Col>
 
                             <Col className="mt-3" sm={{ size: 'auto', offset: 0 }}>
@@ -154,7 +197,7 @@ export class FormRegProd extends Component {
     }
 
 
-    cargarProducts() {
+    /* cargarProducts() {
         fetch(`${BASE_URL}${PATH_PRODUCTS}`)
             .then(result => result.json())
             .then(
@@ -170,7 +213,7 @@ export class FormRegProd extends Component {
                     console.log(error);
                 }
             )
-    }
+    } */
 
     crearProducto(productoACrear) {
         // Simple POST request with a JSON body using fetch
@@ -188,10 +231,11 @@ export class FormRegProd extends Component {
             .then(result => result.json())
             .then(
                 (result) => {
-                    //this.cargarProducts();
                     console.log("result: ", result);
-                    alert("Producto creado")
-                    this.cargarProducts();
+                    let productoACrear = { ...this.state.result };
+                    //window.confirm(`Estos campos son requeridos:\r ${result.map(r => r.nombreProducto)}?`)
+                    //alert("Producto creado")
+                    //this.cargarProducts();
                 },
                 (error) => {
                     console.log(error);

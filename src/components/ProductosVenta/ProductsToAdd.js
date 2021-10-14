@@ -83,7 +83,7 @@ const paginacionopciones = {
 
 
 
-class ListProducts1 extends Component {
+class ProductsToAdd extends Component {
 
     constructor(props) {
         super(props);
@@ -91,6 +91,7 @@ class ListProducts1 extends Component {
         this.state = {
             busqueda: '',
             productos: [],
+            cantidadagregar: 1,
             productosFiltrados: [],
             modalActualizar: false,
             dato: [],
@@ -211,7 +212,7 @@ class ListProducts1 extends Component {
             );
     }
 
-    mostrarModalActualizar = (dato) => {
+    mostrarModalCantidadProductos = (dato) => {
 
         dato.map((registro)=>{
             this.setState({ modalActualizar: true, form: registro });
@@ -247,7 +248,7 @@ class ListProducts1 extends Component {
                     console.log("result: ", result);
                     this.cargarProductos();
                     this.dato.splice(0,this.dato.length);
-                    alert("Producto Actualizado");
+                    alert("Producto Agregado a su pedido");
                 },
                 (error) => {
                     console.log(error);
@@ -307,6 +308,7 @@ class ListProducts1 extends Component {
                     paginationComponentOptions={paginacionopciones}
                     fixedHeader
                     selectableRows
+                    selectableRowsSingle
                     selectableRowsHighlight
                     selectableRowsComponent={this.selectableRowsComponent}
                     onSelectedRowsChange={this.handleChange.bind(this)}
@@ -314,99 +316,34 @@ class ListProducts1 extends Component {
                     noDataComponent="No se encontraron productos"
                 />
 
-                <button type="button" name="editar" className="btnUtil" disabled={this.state.editar} onClick={() => this.mostrarModalActualizar(this.dato)} >
-                    Editar
+                <button type="button" name="editar" className="btn btn-success btnUtil2" /* disabled={this.state.editar} */ onClick={() => this.mostrarModalCantidadProductos(this.dato)} >
+                    Agregar producto
                 </button>
 
-                <button type="button" name="borrar" className="btnUtil" disabled={this.state.borrar} onClick={() => this.handleDelete(this.dato)} >
+                {/* <button type="button" name="borrar" className="btnUtil" disabled={this.state.borrar} onClick={() => this.handleDelete(this.dato)} >
                     Borrar
-                </button>
+                </button> */}
 
                 <div>
 
                     <Modal isOpen={this.state.modalActualizar}>
                         <ModalHeader>
-                            <div><h3>Actualizar producto {this.state.form.nombreProducto}</h3></div>
+                            <div><h3>Cantidad {this.state.form.nombreProducto}</h3></div>
                         </ModalHeader>
 
                         <ModalBody>
                             <FormGroup>
                                 <label>
-                                    Id del producto:
+                                    Cantidad de articulos:
                                 </label>
 
                                 <input
                                     className="form-control"
-                                    readOnly
                                     type="text"
-                                    value={this.state.form.sku}
+                                    name="cantidadagregar"
                                 />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <label>
-                                    Nombre del producto:
-                                </label>
-                                <input
-                                    className="form-control"
-                                    name="nombreProducto"
-                                    type="text"
-                                    onChange={this.handleChange1}
-                                    value={this.state.form.nombreProducto}
-                                    required
-                                />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <label>
-                                    Descripcion:
-                                </label>
-                                <input
-                                    className="form-control"
-                                    name="descripcionProducto"
-                                    type="text"
-                                    onChange={this.handleChange1}
-                                    value={this.state.form.descripcionProducto}
-                                />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <label>
-                                    Cantidad:
-                                </label>
-                                <input
-                                    className="form-control"
-                                    name="cantidadDisponible"
-                                    type="text"
-                                    onChange={this.handleChange1}
-                                    value={this.state.form.cantidadDisponible}
-                                />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <label>
-                                    Estado:
-                                </label>
-                                <input
-                                    className="form-control"
-                                    name="estadoProdInv"
-                                    type="text"
-                                    onChange={this.handleChange1}
-                                    value={this.state.form.estadoProdInv}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <label>
-                                    Precio Unitario:
-                                </label>
-                                <input
-                                    className="form-control"
-                                    name="precioUnitario"
-                                    type="text"
-                                    onChange={this.handleChange1}
-                                    value={this.state.form.precioUnitario}
-                                />
-                            </FormGroup>
+                                </FormGroup>
+                            
                         </ModalBody>
 
                         <ModalFooter>
@@ -414,7 +351,7 @@ class ListProducts1 extends Component {
                                 className="btnUtil1"
                                 onClick={() => this.handleUpdate(this.id, this.state.form)}
                             >
-                                Actualizar
+                                Agregar
                             </Button>
                             <Button
                                 className="btnUtil1"
@@ -436,4 +373,4 @@ class ListProducts1 extends Component {
 
 
 
-export default ListProducts1;
+export default ProductsToAdd;

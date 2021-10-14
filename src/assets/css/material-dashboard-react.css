@@ -532,6 +532,23 @@ footer ul li a:hover {
     margin-bottom: 50px;
   }
 
+  .btnUtil1{
+    width: 100px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .btnUtil2{
+    width: 400px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+
+  }
+
   .barrabusqueda{
     float: right;
     padding: 20px;
