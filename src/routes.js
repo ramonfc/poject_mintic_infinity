@@ -31,6 +31,8 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 
+import CerrarSesion from "views/CerrarSesion/CerrarSesion.js"
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -85,8 +87,8 @@ const dashboardRoutes = [
     path: "/logout",
     name: "Cerrar Sesion",
     icon: ExitToApp,
-    component: RTLPage,
-    layout: "/rtl",
+    component: CerrarSesion,
+    layout: "/user",
   },
   {
     path: "/profile",

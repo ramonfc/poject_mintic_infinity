@@ -1,5 +1,11 @@
 import React from "react";
 import FormRegProd from "components/FormRegProd/FormRegProd";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router";
+import { getAuth } from "firebase/auth";
+
+
 // // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // import InputLabel from "@material-ui/core/InputLabel";
@@ -38,10 +44,24 @@ import FormRegProd from "components/FormRegProd/FormRegProd";
 // const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
+
+  const auth = getAuth();
+
+const logout = () => {
+
+  auth.signOut().then(function () {
+    // Sign-out successful.
+    console.log("loggedouttttt");
+  }).catch((error) => {
+    // An error happened.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+};  
   //const classes = useStyles();
   return (
     <div>
-      <FormRegProd/>
+      {logout()}
       {/*       
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>

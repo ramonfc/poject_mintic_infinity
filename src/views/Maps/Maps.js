@@ -1,10 +1,10 @@
 import React from "react";
-import CrearUsuario from '../../components/CrearUsuario/CrearUsuario';
+import CrearUsuario1 from '../../components/CrearUsuario/CrearUsuario1';
 
 function Maps() {
   return (
     <>
-        <CrearUsuario/>
+        <CrearUsuario1/>
     </>
   );
 }

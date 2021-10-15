@@ -61,7 +61,7 @@ export default function ComponenteLogin() {
                   <div className="container">
                      <div className="row text-center login-page">
                         <div className="col-md-12 login-form">
-                           <form action="/user/dashboard/" method="GET">
+                           {/* <form action="/user/dashboard/" method="GET"> */}
                               <div className="row">
                                  <div className="col-md-12 login-form-header">
                                     <p className="login-form-font-header">
@@ -95,10 +95,11 @@ export default function ComponenteLogin() {
                               </div>
                               <div className="row">
                                  <div className="col-md-12 login-form-row">
-                                    <button className="btn btn-info">Iniciar Sesión</button>
+                                    <button className="btn btn-info" type="submit"
+                                       onClick={() => signInEmailAndPassword(email, password)}>Iniciar Sesión</button>
                                  </div>
                               </div>
-                           </form>
+                           {/* </form> */}
                         </div>
                      </div>
                   </div>

@@ -176,9 +176,9 @@ class ListProducts1 extends Component {
             let arregloProductos = dato;
             arregloProductos.map((registro) => {
                 msg.push(registro.nombreProducto);
-                this.eliminarProducto(registro._id)
+                this.eliminarProducto(registro._id);
+                this.cargarProductos();    
             });
-            this.cargarProductos();
             alert("Se eliminaron: " + msg.join(","));
             this.dato.splice(0,this.dato.length)
         }
@@ -213,7 +213,7 @@ class ListProducts1 extends Component {
 
     mostrarModalActualizar = (dato) => {
 
-        dato.map((registro)=>{
+        dato.current.map((registro)=>{
             this.setState({ modalActualizar: true, form: registro });
             this.id = registro._id;
             console.log(this.id);

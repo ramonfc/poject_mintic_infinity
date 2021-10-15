@@ -1,6 +1,12 @@
 import FormPrueba from "components/FormPrueba/FormPrueba";
-import React from "react";
+
 import Carrusel from "../../components/Carrusel/Carrusel"
+
+
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router";
+import { getAuth } from "firebase/auth";
 // react plugin for creating charts
 // // import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -43,7 +49,26 @@ import Carrusel from "../../components/Carrusel/Carrusel"
 
 //const useStyles = makeStyles(styles);
 
+
+
 export default function Dashboard() {
+
+  const auth = getAuth();
+  const [modalActualizar, setModalActualizar] = React.useState(false);
+  const [modalInsertar, setModalInsertar] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [errors, setErrors] = React.useState(null);
+  const [newVal, setNewVal] = React.useState(0);
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = React.useState("");
+  const history = useHistory();
+
+  React.useEffect(() => {
+    console.log(user);
+    console.log(loading);
+    if (loading) return;
+    if (!user) return history.replace("/");
+  }, [user, loading]);
   //const classes = useStyles();
   return (
     <div>

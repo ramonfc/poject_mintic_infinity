@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import { Form, Row, Col, Label, Input, Button } from "reactstrap"; //Container
@@ -9,16 +8,44 @@ import fotoperfilramon from '../../../src/assets/img/fotoperfil.png'
 import InputLbl from "components/InputLbl/InputLbl";
 import SelectCustom from "components/SelectCustom/SelectCustom";
 
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router-dom";
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "../Firebase/Firebase";
+
 const options = [
     { value: "cc", label: "Cédula de Ciudadanía" },
     { value: "ce", label: "Cédula de Extranjería" },
     { value: "pasaporte", label: "Pasaporte" }
 ];
-export class FormRegProd extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
+function Register() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [user, loading, error] = useAuthState(auth);
+    const history = useHistory();
+  
+  
+    const register = () => {
+  
+      if (!name) {
+        alert("Please enter name");
+      }
+  
+      registerWithEmailAndPassword(name, email, password);
+    };
+  
+  
+    useEffect(() => {
+      if (loading) return;
+      if (user) history.replace("/users");
+    }, [user, loading]);
+
         return (
             // <Container id="contenedor">
             <Card>
@@ -99,6 +126,6 @@ export class FormRegProd extends Component {
 
         )
     }
-}
 
-export default FormRegProd;
+
+export default Register;

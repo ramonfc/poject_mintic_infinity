@@ -1,5 +1,5 @@
 import React from "react";
-import FormRegProd from "components/FormRegProd/FormRegProd";
+import FormRegProd1 from "components/FormRegProd/FormRegProd1";
 // // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // import InputLabel from "@material-ui/core/InputLabel";
@@ -41,7 +41,7 @@ export default function UserProfile() {
   //const classes = useStyles();
   return (
     <div>
-      <FormRegProd/>
+      <FormRegProd1/>
       {/*       
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
