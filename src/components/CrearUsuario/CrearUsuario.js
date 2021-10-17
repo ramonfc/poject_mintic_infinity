@@ -24,7 +24,7 @@ const options = [
 ];
 function Register() {
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [user, loading, error] = useAuthState(auth);

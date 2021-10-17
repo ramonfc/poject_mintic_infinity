@@ -62,43 +62,43 @@ export default function ComponenteLogin() {
                      <div className="row text-center login-page">
                         <div className="col-md-12 login-form">
                            {/* <form action="/user/dashboard/" method="GET"> */}
-                              <div className="row">
-                                 <div className="col-md-12 login-form-header">
-                                    <p className="login-form-font-header">
-                                    </p>
-                                 </div>
+                           <div className="row">
+                              <div className="col-md-12 login-form-header">
+                                 <p className="login-form-font-header">
+                                 </p>
                               </div>
-                              <div className="row">
-                                 <div className="login-field">
-                                    <input
-                                       name="email"
-                                       type="text"
-                                       value={email}
-                                       onChange={(e) => setEmail(e.target.value)}
-                                       placeholder="Correo electrónico"
-                                       required
-                                    />
-                                 </div>
+                           </div>
+                           <div className="row">
+                              <div className="login-field">
+                                 <input
+                                    name="email"
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Correo electrónico"
+                                    required
+                                 />
                               </div>
+                           </div>
 
-                              <br />
-                              <div className="row">
-                                 <div className="login-field">
-                                    <input
-                                       name="password"
-                                       type="password"
-                                       onChange={(e) => setPassword(e.target.value)}
-                                       value={password}
-                                       required
-                                    />
-                                 </div>
+                           <br />
+                           <div className="row">
+                              <div className="login-field">
+                                 <input
+                                    name="password"
+                                    type="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    required
+                                 />
                               </div>
-                              <div className="row">
-                                 <div className="col-md-12 login-form-row">
-                                    <button className="btn btn-info" type="submit"
-                                       onClick={() => signInEmailAndPassword(email, password)}>Iniciar Sesión</button>
-                                 </div>
+                           </div>
+                           <div className="row">
+                              <div className="col-md-12 login-form-row">
+                                 <button className="btn btn-info" type="submit"
+                                    onClick={() => signInEmailAndPassword(email, password)}>Iniciar Sesión</button>
                               </div>
+                           </div>
                            {/* </form> */}
                         </div>
                      </div>
@@ -108,10 +108,16 @@ export default function ComponenteLogin() {
 
                   <ul className='container'>
                      <a href="#" className="insta">
-                        <Button>Google</Button>                     </a>
+                        {/* <Button>Google</Button>                     </a>
                      <a href="#" className="twitter" >
                         <span className="icon-twitter"></span>
-                        <Button>Facebook</Button>
+                        <Button>Facebook</Button> */}
+                        <Button
+                           color="danger"
+                           onClick={signInWithGoogle}
+                        >
+                           Registrate con Google
+                        </Button>
                      </a>
                   </ul>
                </CardBody>

@@ -15,6 +15,11 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { getAuth } from "firebase/auth";
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "../Firebase/Firebase";
 
 const data = [
 ];
@@ -37,6 +42,8 @@ const User = () => {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = React.useState("");
   const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   
 
   const [usuario, setUsuario] = React.useState({
@@ -143,6 +150,17 @@ const User = () => {
   };
 
   const insertar = () => {
+
+    /* if (!name) {
+      alert("Please enter name");
+    } */
+
+    console.log(usuario.form.name);
+    console.log(usuario.form.username);
+    console.log(usuario.form.password);
+    registerWithEmailAndPassword(usuario.form.name, usuario.form.username, usuario.form.password);
+    
+
     let usuarioACrear = { ...usuario.form };
     console.log('1: aca voy!!')
     user.getIdToken(true).then(token => {
@@ -390,6 +408,19 @@ const User = () => {
               <input
                 className="form-control"
                 name="username"
+                type="text"
+                onChange={handleChange}
+                required
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <label>
+                Password:
+              </label>
+              <input
+                className="form-control"
+                name="password"
                 type="text"
                 onChange={handleChange}
                 required

@@ -38,9 +38,9 @@ export const FormRegProd = props => {
   const [form, setForm] = useState({
     sku: "",
     nombreProducto: "",
-    precioUnitario: 0.0,
+    precioUnitario: "",
     estadoProdInv: "",
-    cantidadDisponible: 0,
+    cantidadDisponible: "",
     descripcionProducto: ""
   });
 
@@ -58,9 +58,9 @@ export const FormRegProd = props => {
     setForm({
       sku: "",
       nombreProducto: "",
-      precioUnitario: 0.0,
+      precioUnitario: "",
       estadoProdInv: "",
-      cantidadDisponible: 0,
+      cantidadDisponible: "",
       descripcionProducto: ""
     }); 
     /* let productoACrear = { ...form
@@ -202,7 +202,7 @@ export const FormRegProd = props => {
               size: 'auto',
               offset: 0
             }}>
-                                <Button className="btn btn-danger" type="button" color="primary" id="crearProd" onClick={e => onChange(e)}>Crear</Button>
+                                <Button className="" type="button" color="primary" id="crearProd" onClick={e => onChange(e)}>Crear</Button>
                             </Col>
 
                             <Col className="mt-3" sm={{
