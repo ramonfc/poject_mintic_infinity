@@ -1,4 +1,5 @@
 /*eslint-disable*/
+import ListSales2 from "components/ListVentas/ListSales2.js";
 import React from "react";
 //import ListVentas from '../../components/ListVentas/ListVentas'
 import ListSales1 from '../../components/ListVentas/ListSales1.js'
@@ -20,7 +21,7 @@ export default function Icons() {
   //const classes = useStyles();
   return (
     <>
-      <ListSales1/>
+      <ListSales2/>
     </>
     
     // <GridContainer>
