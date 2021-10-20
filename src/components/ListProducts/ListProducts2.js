@@ -232,6 +232,7 @@ const ListProducts1 = props => {
     const cerrarModalActualizar = useCallback(() => {
         setModalActualizar(false);
     });
+    
     const handleUpdate = useCallback((id, form) => {
         console.log("body:",dato.current);
         cerrarModalActualizar(); // Simple POST request with a JSON body using fetch
