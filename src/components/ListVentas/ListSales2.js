@@ -120,6 +120,8 @@ const ListSales2 = props => {
     const history = useHistory();
     const [newVal, setNewVal] = React.useState(0);
     const [isLoaded, setIsLoaded] = React.useState(false);
+   
+    const [errors, setErrors] = React.useState(null);
 
     const [newVal1, setNewVal1] = React.useState(0);
 
@@ -191,15 +193,15 @@ const ListSales2 = props => {
 
 
    
-    React.useEffect(() => {
+   /*  React.useEffect(() => {
 
 
             console.log("ID de la venta",dato.current[0]._id);
-            alert(dato.current);
+            alert(dato.current); 
 
         
         if (!user) return history.replace("/");
-        /* user.getIdToken(true).then(token => {
+         user.getIdToken(true).then(token => {
             const requestOptions = {
                 method: 'GET',
                 headers: {
@@ -222,8 +224,8 @@ const ListSales2 = props => {
                         setErrors(error);
                     }
                 )
-        }); */
-    }, [newVal1]); 
+        }); 
+    }, [newVal1]);  */
 
 
     useEffect(() => {
@@ -286,7 +288,7 @@ const ListSales2 = props => {
         if (rows.length === 0) {
             setBorrar(true);
             setEditar(true);
-            dato1.productos.current.splice(0, props.length);
+           // dato1.current.productos.splice(0, props.length);
         }
 
         if (rows.length === 1) {
@@ -356,7 +358,8 @@ const ListSales2 = props => {
                 eliminarProductoVenta(dato.current[0]);
             });
             setProductosVenta(dato.current[0].productos);
-            setNewVal1(newVal1 + 1);
+            //setNewVal1(newVal1 + 1);
+            cerrarModalActualizar();
             alert("Se eliminaron: " + msg.join(","));
             
 
