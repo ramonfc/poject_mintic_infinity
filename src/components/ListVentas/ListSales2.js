@@ -233,23 +233,52 @@ const ListSales2 = props => {
         cargarProductos();
     }, []);
 
-
-    const onChange = useCallback(() => {
-        setBusqueda(event.target.value);
-        filtrarproductos(event.target.value);
+    const onChange = useCallback((event) => {
+        console.log('event.target.value ', event.target.value);  
+        // Imprimimos value 
+        setBusqueda(event.target.value);     
+        // actualizamos busqueda
+        console.log('busqueda ', busqueda);  
+        // imprimimos busqueda  
+        const PalabraBuscada = (event.target.value).toLowerCase().toString(); 
+        // 1). creamos parametro para enviar a filtrarproductos
+        filtrarproductos(PalabraBuscada); 
+        // 2). pasamos parametro en minuscula
     });
 
-
-    const filtrarproductos = useCallback(() => {
+    const filtrarproductos = useCallback((PalabraBuscada) => {
         try {
-            var search = productos.filter(item => {
-                return item.nombreCliente.includes(busqueda) || item.idVendedor.includes(busqueda) || item.idVenta.includes(busqueda);
-            });
-            setProductosFiltrados(search);
+            // 3). hacemos una busqueda en todos los productos, cuando hacen match se almacenan en item
+            var search = productos.filter(item => { 
+                //console.log('texto: ', item.nombreProducto + item.descripcionProducto + item.sku)    
+                return (item.nombreCliente + item.idVenta + item.idCliente).toLowerCase().match(PalabraBuscada) 
+                // concatenamos las propiedades de arriba. lo convertimos todo en minuscula y buscamos los match.
+               
+            }); 
+            // 4). 'search' retorna un array con todos los productos que hicieron match
+            console.log('search: ', search)
+            setProductosFiltrados(search); 
+            // 5). con los productos que hicieron match, actualizamos ProductosFiltrados y estos se pintan en la tabla.
         } catch (error) {
             console.log(error);
         }
     });
+    // const onChange = useCallback(() => {
+    //     setBusqueda(event.target.value);
+    //     filtrarproductos(event.target.value);
+    // });
+
+
+    // const filtrarproductos = useCallback(() => {
+    //     try {
+    //         var search = productos.filter(item => {
+    //             return item.nombreCliente.includes(busqueda) || item.idVendedor.includes(busqueda) || item.idVenta.includes(busqueda);
+    //         });
+    //         setProductosFiltrados(search);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // });
 
 
     const handleChange = useCallback((e) => {
