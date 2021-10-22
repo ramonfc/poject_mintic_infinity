@@ -1,6 +1,11 @@
 /*eslint-disable*/
 import React from "react";
 import ListaUsuarios from "components/ListaUsuarios/ListaUsuarios";
+import ListUsers1 from "components/ListaUsuarios/ListUsers1";
+
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import GridItem from "components/Grid/GridItem";
 // // nodejs library to set properties for components
 // import PropTypes from "prop-types";
 // // @material-ui/core components
@@ -123,7 +128,17 @@ export default function Notifications() {
   // };
   return (
     <>
-      <ListaUsuarios/>
+
+<Card>
+        <GridItem>
+          <CardHeader color="info">
+
+            <h4>Lista de Usuarios</h4>
+
+          </CardHeader>
+          <ListUsers1 />
+        </GridItem >
+      </Card>
     </>
     // <Card>
     //   <CardHeader color="primary">

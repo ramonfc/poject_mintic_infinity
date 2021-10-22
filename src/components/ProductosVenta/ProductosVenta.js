@@ -1,6 +1,7 @@
 import React from 'react';
 
 
+
 import {
   Table,
   Button,
@@ -15,6 +16,7 @@ import {
   // Row,
 
 } from "reactstrap";
+import ProductsToAdd from './ProductsToAdd';
 
 const data = [
   { id: 1, name: "Dulce de Guayaba", position: "Centro 2-10-1", status: "D", description: "Caja x 10", quantity: "1500" },
@@ -30,7 +32,7 @@ class User extends React.Component {
     super(props);
 
     this.state = {
-      data: data,
+      data: [],
       modalActualizar: false,
       modalInsertar: false,
       form: {
@@ -43,16 +45,6 @@ class User extends React.Component {
       }
     };
   }
-
-  mostrarModalActualizar = (dato) => {
-
-    this.setState({ modalActualizar: true, form: dato });
-
-  };
-
-  cerrarModalActualizar = () => {
-    this.setState({ modalActualizar: false });
-  };
 
   mostrarModalInsertar = () => {
     this.setState({ modalInsertar: true });
@@ -131,6 +123,7 @@ class User extends React.Component {
           <Button 
             style={{ width:"100px", marginLeft:"420px"}}
             color="link"
+            onClick={()=>this.mostrarModalInsertar()}
             
           >
             Agregar producto
@@ -172,195 +165,18 @@ class User extends React.Component {
           </Table>
         </Container>
 
-        <Modal isOpen={this.state.modalActualizar}>
-          <ModalHeader>
-            <div><h3>Actualizar producto {this.state.form.name}</h3></div>
-          </ModalHeader>
-
-          <ModalBody>
-            <FormGroup>
-              <label>
-                Id del producto:
-              </label>
-
-              <input
-                className="form-control"
-                readOnly
-                type="text"
-                value={this.state.form.id}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Nombre:
-              </label>
-              <input
-                className="form-control"
-                name="name"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.name}
-                required
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Descripcion:
-              </label>
-              <input
-                className="form-control"
-                name="description"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.description}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Cantidad:
-              </label>
-              <input
-                className="form-control"
-                name="quantity"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.quantity}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Estado:
-              </label>
-              <input
-                className="form-control"
-                name="status"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.status}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Ubicacion:
-              </label>
-              <input
-                className="form-control"
-                name="position"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.position}
-              />
-            </FormGroup>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              color="primary"
-              onClick={() => this.editar(this.state.form)}
-            >
-              Actualizar
-            </Button>
-            <Button
-              className="btn btn-danger"
-              onClick={() => this.cerrarModalActualizar()}
-            >
-              Cancelar
-            </Button>
-          </ModalFooter>
-        </Modal>
-
-
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-            <div><h3>Agregar producto</h3></div>
+            <div><h3>Agregar productos a su pedido</h3></div>
           </ModalHeader>
 
           <ModalBody>
-            <FormGroup>
-              <label>
-                Id:
-              </label>
-
-              <input
-                className="form-control"
-                readOnly
-                type="text"
-                value={this.state.data.length + 1}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Nombre:
-              </label>
-              <input
-                className="form-control"
-                name="name"
-                type="text"
-                onChange={this.handleChange}
-                required
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Descripción:
-              </label>
-              <input
-                className="form-control"
-                name="description"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Cantidad:
-              </label>
-              <input
-                className="form-control"
-                name="quantity"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Estado:
-              </label>
-              <input
-                className="form-control"
-                name="status"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Ubicación:
-              </label>
-              <input
-                className="form-control"
-                name="position"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
+            <ProductsToAdd/>
+            
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              color="primary"
-              onClick={() => this.insertar()}
-            >
-              Agregar
-            </Button>
+            
             <Button
               className="btn btn-danger"
               onClick={() => this.cerrarModalInsertar()}

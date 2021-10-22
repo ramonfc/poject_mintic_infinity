@@ -78,17 +78,29 @@ export default function Admin() {
   // initialize and destroy the PerfectScrollbar plugin
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(mainPanel.current, {
+      try{
+         ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
         suppressScrollY: false,
       });
-      document.body.style.overflow = "hidden";
+      }
+      catch(error){
+        console.log("error atrapado" + error);
+        
+      } 
+     
+      document.body.style.overflow = "visible";
     }
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
-        ps.destroy();
+        try{
+          ps.destroy();
+        }catch(error){
+          console.log("error atrapado" + error);
+        }
+        
       }
       window.removeEventListener("resize", resizeFunction);
     };

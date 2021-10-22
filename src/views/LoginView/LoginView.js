@@ -1,8 +1,15 @@
 /*Login View Infinity*/
 /*Importamos react, estilos de la vista y el logo*/
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './LoginView.css'
 import logo from '../../../src/assets/img/logoinfinity.png'
+import {
+   auth,
+   signInEmailAndPassword,
+   signInWithGoogle,
+} from "../../components/Firebase/Firebase";
+import { useHistory } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 // // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,11 +23,28 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 import Button from "@restart/ui/esm/Button";
+import GoogleButton from 'react-google-button'
+import { Alignment } from "react-data-table-component";
 const useStyles = makeStyles(styles);
 
 
 export default function ComponenteLogin() {
    const classes = useStyles();
+
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [user, loading, error] = useAuthState(auth);
+   const [errors, seterrors] = useState('');
+   const history = useHistory();
+
+   useEffect(() => {
+      if (loading) {
+         // maybe trigger a loading screen
+         return;
+      }
+      if (user) { history.replace("/user/dashboard"); }
+   }, [user, loading]);
+
    return (
 
       <GridContainer justify="center">
@@ -28,7 +52,7 @@ export default function ComponenteLogin() {
             <Card>
                <CardHeader color="info">
                   <h4 className={classes.cardTitleWhite}>
-                     Infinity: Sales Manager
+                     Infinity: Gestor de ventas
                   </h4>
                   <p className={classes.cardCategoryWhite}>
                      MisionTIC 2022
@@ -39,31 +63,51 @@ export default function ComponenteLogin() {
                   <div className="container">
                      <div className="row text-center login-page">
                         <div className="col-md-12 login-form">
-                           <form action="/user/dashboard/" method="GET">
-                              <div className="row">
-                                 <div className="col-md-12 login-form-header">
-                                    <p className="login-form-font-header">
-                                    </p>
-                                 </div>
+                           {/* <form action="/user/dashboard/" method="GET"> */}
+                           <div className="row">
+                              <div className="col-md-12 login-form-header">
+                                 <p className="login-form-font-header">
+                                 </p>
                               </div>
-                              <div className="row">
-                                 <div className="login-field">
-                                    <input name="username" type="text" placeholder='username' required />
-                                 </div>
+                           </div>
+                           <div className="row">
+                              <div className="login-field">
+                                 <input
+                                    name="email"
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Correo electrónico"
+                                    required
+                                 />
                               </div>
+                           </div>
 
-                              <br />
-                              <div className="row">
-                                 <div className="login-field">
-                                    <input name="password" type="password" placeholder='password' required />
-                                 </div>
+                           <br />
+                           <div className="row">
+                              <div className="login-field">
+                                 <input
+                                    name="password"
+                                    type="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    placeholder="Contraseña"
+                                    required
+                                 />
                               </div>
-                              <div className="row">
-                                 <div className="col-md-12 login-form-row">
-                                    <button className="btn btn-info">Iniciar Sesión</button>
-                                 </div>
+                           </div>
+                           <div className="row">
+                              <div className="col-md-12 login-form-row">
+                                 <button className="btn btn-info" type="submit"
+                                    onClick={() => signInEmailAndPassword(email, password)}>Iniciar Sesión</button>
+
+                                    <br/>
+                                 <GoogleButton  style={{marginLeft: "9.5%", width: "80%"}} label='Ingresar con Google'
+                                    onClick={signInWithGoogle}
+                                 />
                               </div>
-                           </form>
+                           </div>
+                           {/* </form> */}
                         </div>
                      </div>
                   </div>
@@ -72,10 +116,11 @@ export default function ComponenteLogin() {
 
                   <ul className='container'>
                      <a href="#" className="insta">
-                        <Button>Google</Button>                     </a>
+                        {/* <Button>Google</Button>                     </a>
                      <a href="#" className="twitter" >
                         <span className="icon-twitter"></span>
-                        <Button>Facebook</Button>     
+                        <Button>Facebook</Button> */}
+                        
                      </a>
                   </ul>
                </CardBody>

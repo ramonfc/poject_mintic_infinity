@@ -1,6 +1,12 @@
 /*eslint-disable*/
+import ListSales2 from "components/ListVentas/ListSales2.js";
 import React from "react";
-import ListVentas from '../../components/ListVentas/ListVentas'
+//import ListVentas from '../../components/ListVentas/ListVentas'
+import ListSales1 from '../../components/ListVentas/ListSales1.js'
+
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import GridItem from "components/Grid/GridItem";
 // // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
 // import Hidden from "@material-ui/core/Hidden";
@@ -19,7 +25,18 @@ export default function Icons() {
   //const classes = useStyles();
   return (
     <>
-      <ListVentas/>
+
+<Card>
+        <GridItem>
+          <CardHeader color="info">
+
+            <h4>Lista de ventas</h4>
+
+          </CardHeader>
+          <ListSales2 />
+        </GridItem >
+      </Card>
+    
     </>
     
     // <GridContainer>
