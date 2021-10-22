@@ -23,6 +23,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 import Button from "@restart/ui/esm/Button";
+import GoogleButton from 'react-google-button'
+import { Alignment } from "react-data-table-component";
 const useStyles = makeStyles(styles);
 
 
@@ -50,7 +52,7 @@ export default function ComponenteLogin() {
             <Card>
                <CardHeader color="info">
                   <h4 className={classes.cardTitleWhite}>
-                     Infinity: Sales Manager
+                     Infinity: Gestor de ventas
                   </h4>
                   <p className={classes.cardCategoryWhite}>
                      MisionTIC 2022
@@ -89,6 +91,7 @@ export default function ComponenteLogin() {
                                     type="password"
                                     onChange={(e) => setPassword(e.target.value)}
                                     value={password}
+                                    placeholder="Contraseña"
                                     required
                                  />
                               </div>
@@ -97,6 +100,11 @@ export default function ComponenteLogin() {
                               <div className="col-md-12 login-form-row">
                                  <button className="btn btn-info" type="submit"
                                     onClick={() => signInEmailAndPassword(email, password)}>Iniciar Sesión</button>
+
+                                    <br/>
+                                 <GoogleButton  style={{marginLeft: "9.5%", width: "80%"}} label='Ingresar con Google'
+                                    onClick={signInWithGoogle}
+                                 />
                               </div>
                            </div>
                            {/* </form> */}
@@ -112,12 +120,7 @@ export default function ComponenteLogin() {
                      <a href="#" className="twitter" >
                         <span className="icon-twitter"></span>
                         <Button>Facebook</Button> */}
-                        <Button
-                           color="danger"
-                           onClick={signInWithGoogle}
-                        >
-                           Registrate con Google
-                        </Button>
+                        
                      </a>
                   </ul>
                </CardBody>

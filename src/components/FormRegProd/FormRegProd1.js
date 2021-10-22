@@ -12,12 +12,13 @@ import { WindowsBalloon } from "node-notifier";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { getAuth } from "firebase/auth";
+import { responsiveFontSizes } from "@material-ui/core";
 
 
 
 const options = [
-    { value: "disponible", label: "Disponible" },
-    { value: "noDisponible", label: "No Disponible" }
+  { value: "disponible", label: "Disponible" },
+  { value: "noDisponible", label: "No Disponible" }
 ];
 
 
@@ -45,7 +46,7 @@ export const FormRegProd = props => {
   });
 
   React.useEffect(() => {
-    
+
     if (loading) return;
     if (!user) return history.replace("/");
   }, [user, loading]);
@@ -53,8 +54,8 @@ export const FormRegProd = props => {
   const [result, setResult] = useState();
 
   const insertar = (productoACrear) => {
-      
-      
+
+
     setForm({
       sku: "",
       nombreProducto: "",
@@ -62,43 +63,55 @@ export const FormRegProd = props => {
       estadoProdInv: "",
       cantidadDisponible: "",
       descripcionProducto: ""
-    }); 
+    });
     /* let productoACrear = { ...form
     }; */
-    console.log("Insertar:",productoACrear);
+    console.log("Insertar:", productoACrear);
     crearProducto(productoACrear);
   };
 
+  const limpiarFormulario = ()=>{
+    setForm({
+      sku: "",
+      nombreProducto: "",
+      precioUnitario: "",
+      estadoProdInv: "",
+      cantidadDisponible: "",
+      descripcionProducto: ""
+    });
+    
+  }
+
   const crearProducto = (productoACrear) => {
 
-    
-    
+
+
     // Simple POST request with a JSON body using fetch
     user.getIdToken().then(token => {
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify(productoACrear)
-        };
-  
-    fetch(`${BASE_URL}${PATH_PRODUCTS}`, requestOptions).then(result => result.json()).then(result => {
-      console.log("result: ", result);
-     
-    }, error => {
-      console.log(error);
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(productoACrear)
+      };
+
+      fetch(`${BASE_URL}${PATH_PRODUCTS}`, requestOptions).then(result => result.json()).then(result => {
+        console.log("result: ", result);
+
+      }, error => {
+        console.log(error);
+      });
     });
-  });
-}
+  }
 
   const onChange = (e) => {
-    let productoACrear = { ...form};
-    
+    let productoACrear = { ...form };
+
 
     if (validateFields(productoACrear) === 0) {
-        
+
       insertar(productoACrear); // this.setState({ modalInsertar: false }); 
     } else {
       e.preventDefault();
@@ -118,13 +131,13 @@ export const FormRegProd = props => {
       p += 1;
     }
 
-    if (productoACrear.precioUnitario < 0) {
-      alert("El campo Precio Unitario debe ser mayoy o igual a 0");
+    if (productoACrear.precioUnitario < 0 || isNaN(productoACrear.precioUnitario) ) {
+      alert("El campo Precio Unitario debe ser un numero mayor o igual a 0");
       p += 1;
     }
 
-    if (productoACrear.cantidadDisponible < 0) {
-      alert("El campo cantidad Disponible debe ser mayoy o igual a 0");
+    if (productoACrear.cantidadDisponible < 0 || isNaN(productoACrear.cantidadDisponible)) {
+      alert("El campo cantidad Disponible debe ser un numero mayor o igual a 0");
       p += 1;
     }
 
@@ -137,7 +150,8 @@ export const FormRegProd = props => {
   };
 
   const handleChange = useCallback((e) => {
-    setForm({ ...form,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value
     });
   });
@@ -149,78 +163,78 @@ export const FormRegProd = props => {
   }); */
   return (// <Container id="contenedor"> //No se está usando
     <Card>
-                <GridItem>
-                    <CardHeader color="info">
+      <GridItem>
+        <CardHeader color="info">
 
-                        <h4>Registro de Productos</h4>
+          <h4>Registro de Productos</h4>
 
-                    </CardHeader>
-                    <br />
-
-                   
-                        <Row>
-                            <Col xs="4">
-                                {
-                /*   <Label for="sku">ID del Producto</Label>
-                <Input className="mb-4" type="text" name="sku" id="idProduct" placeholder="" required/> */
-              }
-
-                                <InputLbl text="ID del Producto" type="text" className="mb-4" name="sku" onChange={handleChange} value={form.sku}/>
-
-                                <InputLbl text="Nombre del Producto" type="text" className="mb-4" name="nombreProducto" onChange={handleChange} value={form.nombreProducto}/>
-
-                                <InputLbl text="Precio Unitario" type="text" className="mb-4" name="precioUnitario" onChange={handleChange} value={form.precioUnitario}/>
-
-                               {
-                /*  <SelectCustom options={options} className="mb-4" text="Estado en Inventario" name="estadoProdInv"  handleChange={this. handleSelectChange} /> */
-              }
-
-                                 <Label>Estado en Inventario</Label>
-                                <select type="select" name="estadoProdInv" onChange={handleChange} value={form.estadoProdInv} className="mb-4">
-                                <option value=""></option>
-                                    <option value="Disponible">Disponible</option>
-                                    <option value="No Disponible">No Disponible</option>                                    
-                                </select> 
-
-                                <InputLbl text="Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible" onChange={handleChange} value={form.cantidadDisponible}/>
-
-                            </Col>
-
-                            <Col xs="7">
-                                {
-                /* <Label for="descripcionProd">Descripción</Label>
-                <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" /> */
-              }
-
-                                <InputLbl text="Descripción" type="textarea" className="descripcion" rows="15" name="descripcionProducto" onChange={handleChange} value={form.descripcionProducto}/>
-
-                            </Col>
-                        </Row>
-
-                        <Row className="mb-4">
-                            <Col className="mt-3" sm={{
-              size: 'auto',
-              offset: 0
-            }}>
-                                <Button className="" type="button" color="primary" id="crearProd" onClick={e => onChange(e)}>Crear</Button>
-                            </Col>
-
-                            <Col className="mt-3" sm={{
-              size: 'auto',
-              offset: 0
-            }}>
-                                <Button className="" type="reset" color="primary" id="crearProd">Limpiar</Button>
-                            </Col>
-
-                        </Row>
-
-                  
+        </CardHeader>
+        <br />
 
 
-                </GridItem>
-            </Card>
+        <Row>
+          <Col xs="4">
+            {
+              /*   <Label for="sku">ID del Producto</Label>
+              <Input className="mb-4" type="text" name="sku" id="idProduct" placeholder="" required/> */
+            }
+
+            <InputLbl text="ID del Producto" type="text" className="mb-4" name="sku" onChange={handleChange} value={form.sku} />
+
+            <InputLbl text="Nombre del Producto" type="text" className="mb-4" name="nombreProducto" onChange={handleChange} value={form.nombreProducto} />
+
+            <InputLbl text="Precio Unitario" type="text" className="mb-4" name="precioUnitario" onChange={handleChange} value={form.precioUnitario} />
+
+            {
+              /*  <SelectCustom options={options} className="mb-4" text="Estado en Inventario" name="estadoProdInv"  handleChange={this. handleSelectChange} /> */
+            }
+
+            <Label>Estado en Inventario  </Label>
+            <select type="select" style={{width:"100%", height:"10%", fontSize:"1rem"}} name="estadoProdInv" onChange={handleChange} value={form.estadoProdInv} className="mb-4">
+              <option value=""></option>
+              <option value="Disponible">Disponible</option>
+              <option value="No Disponible">No Disponible</option>
+            </select>
+
+            <InputLbl text="Cantidad Disponible" type="text" className="mb-4" name="cantidadDisponible" onChange={handleChange} value={form.cantidadDisponible} />
+
+          </Col>
+
+          <Col xs="7">
+            {
+              /* <Label for="descripcionProd">Descripción</Label>
+              <Input className="descripcion" type="textarea" name="descripcionProd" id="descripcionProd" /> */
+            }
+
+            <InputLbl text="Descripción" type="textarea" className="descripcion" rows="15" name="descripcionProducto" onChange={handleChange} value={form.descripcionProducto} />
+
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col className="mt-3" sm={{
+            size: 'auto',
+            offset: 0
+          }}>
+            <Button className="" type="button" color="primary" id="crearProd" onClick={e => onChange(e)}>Crear</Button>
+          </Col>
+
+          <Col className="mt-3" sm={{
+            size: 'auto',
+            offset: 0
+          }}>
+            <Button className="" type="reset" color="primary" id="crearProd" onClick={limpiarFormulario} >Limpiar</Button>
+          </Col>
+
+        </Row>
+
+
+
+
+      </GridItem>
+    </Card>
   );
-  
+
 };
 
 export default FormRegProd;

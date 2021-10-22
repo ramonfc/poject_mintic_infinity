@@ -12,7 +12,7 @@ class Carrusel extends Component {
     render() {
         return (
 
-            <Card>
+            <Card className="h-75">
                 <GridItem>
                     <Carousel>
                         <div>

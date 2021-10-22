@@ -1,5 +1,9 @@
 import FormPrueba from "components/FormPrueba/FormPrueba";
 
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import GridItem from "components/Grid/GridItem";
+
 import Carrusel from "../../components/Carrusel/Carrusel"
 
 
@@ -72,8 +76,17 @@ export default function Dashboard() {
   //const classes = useStyles();
   return (
     <div>
-      <Carrusel/>
-      <FormPrueba/>
+
+<Card>
+        <GridItem >
+          <CardHeader color="info">
+
+            <h4>Inicio</h4>
+
+          </CardHeader>
+          <Carrusel className="w-75"/>
+        </GridItem >
+      </Card>
       {/* <GridItem xs={12} sm={6} md={3}>
         <CardBody>
           <Table

@@ -119,7 +119,7 @@ export class FormRegVentas extends Component {
 
                                 {/* <SelectCustom options={options}  className="mb-3" text="Estado de la Venta" name="estadoVenta"/> */}
                                 <Label  >Estado de la Venta</Label>
-                                <select type="select" name="estadoVenta" onChange={this.handleChange} value={this.state.form.estadoVenta} className="mb-3">
+                                <select type="select" name="estadoVenta" style={{width:"100%", height:"2.2rem", fontSize:"1rem"}} onChange={this.handleChange} value={this.state.form.estadoVenta} className="mb-3">
                                 <option value=""></option>
                                     <option value="proceso">En Proceso</option>
                                     <option value="cancelada">Cancelada</option> 
@@ -159,11 +159,7 @@ export class FormRegVentas extends Component {
 
                             </Col>
 
-                            <Col id="TablaProductos" xs="1">
-
-                            <ProductosVenta/>
-
-                            </Col>
+                            
 
                         </Row>
                         

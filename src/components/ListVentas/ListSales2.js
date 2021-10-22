@@ -1,7 +1,7 @@
 import React, { Component, useState, useRef, useCallback, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DataTable from 'react-data-table-component';
-import ListProducts2 from '../../components/ListProducts/ListProducts2.js'
+
 import {
     Container,
     Row,
@@ -23,8 +23,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 //const BASE_URL = "http://localhost:3000/";
 console.log(BASE_URL);
 const PATH_SALES = 'sales';
+const PATH_PRODUCTS = 'products';
 
-const columnas = [
+const columnasv = [
     {
         name: 'ID venta',
         selector: 'idVenta',
@@ -87,17 +88,42 @@ const columnas_1 = [
     },
     {
         name: 'Nombre',
-        selector: 'nombre',
+        selector: 'nombreProducto',
         sorteable: true
     },
     {
         name: 'Precio Unitario',
-        selector: 'precio',
+        selector: 'precioUnitario',
         sorteable: true
     },
     {
         name: 'Cantidad',
-        selector: 'cantidad',
+        selector: 'cantidadDisponible',
+        sorteable: true
+    }
+
+
+]
+
+const columnas_2 = [
+    {
+        name: 'ID del producto',
+        selector: 'sku',
+        sorteable: true
+    },
+    {
+        name: 'Nombre del producto',
+        selector: 'nombreProducto',
+        sorteable: true
+    },
+    {
+        name: 'Precio Unitario',
+        selector: 'precioUnitario',
+        sorteable: true
+    },
+    {
+        name: 'Cantidad',
+        selector: 'cantidadDisponible',
         sorteable: true
     }
 
@@ -120,17 +146,22 @@ const ListSales2 = props => {
     const history = useHistory();
     const [newVal, setNewVal] = React.useState(0);
     const [isLoaded, setIsLoaded] = React.useState(false);
+   
+    const [errors, setErrors] = React.useState(null);
 
     const [newVal1, setNewVal1] = React.useState(0);
 
     const [busqueda, setBusqueda] = useState();
     const [productosFiltrados, setProductosFiltrados] = useState();
+    const [productosAgregar, setProductosAgregar] = useState();
     const [productos, setProductos] = useState();
     const [borrar, setBorrar] = useState(true);
     const [editar, setEditar] = useState(true);
     const [modalAgregar, setModalAgregar] = useState();
     const [modalActualizar, setModalActualizar] = useState();
     const [productosVenta, setProductosVenta] = useState();
+    const [modalAgregarProductos, setModalAgregarProductos] = useState();
+    const [modalCantidadSolicitada, setModalCantidadSolicitada] = useState();
     const [form, setForm] = useState({
         idVenta: "",
         nombreCliente: "",
@@ -152,8 +183,10 @@ const ListSales2 = props => {
     }, []);
     const dato = useRef();   //Constante para manejo de selectedRows en tabla de ListSales2     
     const dato1 = useRef();  //Constante para manejo de selectedRows en tabla de productosVenta
+    const dato2 = useRef();  //Constante para manejo de selectedRows en tabla de productosAgregar
     const id = useRef();     //Constante para manejo de _id en dato
     const id1 = useRef();    //Constante para manejo de _id en dato1
+    const cantidad = useRef({val: 0}); //Variable para cantidad de productos agregar a la venta
     const selectableRowsComponent = useRef();
 
 
@@ -191,15 +224,15 @@ const ListSales2 = props => {
 
 
    
-    React.useEffect(() => {
+   /*  React.useEffect(() => {
 
 
             console.log("ID de la venta",dato.current[0]._id);
-            alert(dato.current);
+            alert(dato.current); 
 
         
         if (!user) return history.replace("/");
-        /* user.getIdToken(true).then(token => {
+         user.getIdToken(true).then(token => {
             const requestOptions = {
                 method: 'GET',
                 headers: {
@@ -222,8 +255,8 @@ const ListSales2 = props => {
                         setErrors(error);
                     }
                 )
-        }); */
-    }, [newVal1]); 
+        }); 
+    }, [newVal1]);  */
 
 
     useEffect(() => {
@@ -231,23 +264,52 @@ const ListSales2 = props => {
         cargarProductos();
     }, []);
 
-
-    const onChange = useCallback(() => {
-        setBusqueda(event.target.value);
-        filtrarproductos(event.target.value);
+    const onChange = useCallback((event) => {
+        console.log('event.target.value ', event.target.value);  
+        // Imprimimos value 
+        setBusqueda(event.target.value);     
+        // actualizamos busqueda
+        console.log('busqueda ', busqueda);  
+        // imprimimos busqueda  
+        const PalabraBuscada = (event.target.value).toLowerCase().toString(); 
+        // 1). creamos parametro para enviar a filtrarproductos
+        filtrarproductos(PalabraBuscada); 
+        // 2). pasamos parametro en minuscula
     });
 
-
-    const filtrarproductos = useCallback(() => {
+    const filtrarproductos = useCallback((PalabraBuscada) => {
         try {
-            var search = productos.filter(item => {
-                return item.nombreCliente.includes(busqueda) || item.idVendedor.includes(busqueda) || item.idVenta.includes(busqueda);
-            });
-            setProductosFiltrados(search);
+            // 3). hacemos una busqueda en todos los productos, cuando hacen match se almacenan en item
+            var search = productos.filter(item => { 
+                //console.log('texto: ', item.nombreProducto + item.descripcionProducto + item.sku)    
+                return (item.nombreCliente + item.idVenta + item.idCliente).toLowerCase().match(PalabraBuscada) 
+                // concatenamos las propiedades de arriba. lo convertimos todo en minuscula y buscamos los match.
+               
+            }); 
+            // 4). 'search' retorna un array con todos los productos que hicieron match
+            console.log('search: ', search)
+            setProductosFiltrados(search); 
+            // 5). con los productos que hicieron match, actualizamos ProductosFiltrados y estos se pintan en la tabla.
         } catch (error) {
             console.log(error);
         }
     });
+    // const onChange = useCallback(() => {
+    //     setBusqueda(event.target.value);
+    //     filtrarproductos(event.target.value);
+    // });
+
+
+    // const filtrarproductos = useCallback(() => {
+    //     try {
+    //         var search = productos.filter(item => {
+    //             return item.nombreCliente.includes(busqueda) || item.idVendedor.includes(busqueda) || item.idVenta.includes(busqueda);
+    //         });
+    //         setProductosFiltrados(search);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // });
 
 
     const handleChange = useCallback((e) => {
@@ -269,12 +331,30 @@ const ListSales2 = props => {
 
         if (rows.length > 1) {
             setEditar(true);
+            setBorrar(false);
         } //this.setState.disabled;
 
 
         console.log(borrar);
         console.log(editar);
         console.log(dato.current);
+    });
+
+    const handleChange4 = (e) => {
+     
+          cantidad.current.val= e.target.value 
+          console.log("C:",cantidad.current);
+          console.log(typeof cantidad.current);
+          
+      };
+      
+
+    const handleChange3 = useCallback((e) => {
+       
+        console.log("SRv",e.selectedRows);
+        dato2.current = e.selectedRows;
+
+        console.log("Dato2:",dato2.current[0]);
     });
 
     const handleChange2 = useCallback((e) => {
@@ -286,7 +366,7 @@ const ListSales2 = props => {
         if (rows.length === 0) {
             setBorrar(true);
             setEditar(true);
-            dato1.productos.current.splice(0, props.length);
+            dato1.productos.splice(0, props.length);
         }
 
         if (rows.length === 1) {
@@ -296,6 +376,7 @@ const ListSales2 = props => {
 
         if (rows.length > 1) {
             setEditar(true);
+            setBorrar(false);
         } //this.setState.disabled;
 
 
@@ -315,20 +396,20 @@ const ListSales2 = props => {
     });
 
 
-    const handleDelete = useCallback(() => {
-        console.log(dato);
-        console.log(dato.length);
+    const handleDelete = useCallback((d) => {
+        console.log("SRV",d);
+        console.log("LSRV",d.length);
 
-        if (window.confirm(`Está usted seguro de borrar:\r ${dato.map(r => r.nombreCliente)}?`)) {
+        if (window.confirm(`Está usted seguro de borrar:\r ${d.map(r => r.nombreCliente)}?`)) {
             let msg = [];
-            let arregloProductos = dato;
+            let arregloProductos = d;
             arregloProductos.map(registro => {
                 msg.push(registro.nombreCliente);
                 eliminarProducto(registro._id);
             });
             cargarProductos();
             alert("Se eliminaron: " + msg.join(","));
-            dato.current.splice(0, props.length);
+            dato.current.splice(0, d.length);
         }
     });
 
@@ -355,8 +436,7 @@ const ListSales2 = props => {
                 console.log("datos_venta_body",dato.current);
                 eliminarProductoVenta(dato.current[0]);
             });
-            setProductosVenta(dato.current[0].productos);
-            setNewVal1(newVal1 + 1);
+            //setNewVal1(newVal1 + 1);
             alert("Se eliminaron: " + msg.join(","));
             
 
@@ -397,6 +477,7 @@ const ListSales2 = props => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             }   ,body: JSON.stringify(b)
+            
 
         }; //console.log(requestOptions);
         //alert("Producto creado exitosamente");
@@ -404,6 +485,7 @@ const ListSales2 = props => {
         fetch(`${BASE_URL}${PATH_SALES}/${b._id}`, requestOptions).then(result => result.json()).then(result => {
             console.log("result: ", result); //alert("Producto eliminado")
             //this.cargarProductos();
+            setProductosVenta(result.productos);
         
         }, error => {
             console.log(error);
@@ -442,11 +524,110 @@ const ListSales2 = props => {
         console.log("Apagando modal");
     });
 
+    const mostrarModalAgregarProductos = useCallback(() => {
+        setModalAgregarProductos(true);
+        cargarInventario();
+        
+    });
 
+    const cargarInventario = () =>{
+        if (!user) return history.replace("/");
+        user.getIdToken(true).then(token => {
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            fetch(`${BASE_URL}${PATH_PRODUCTS}`, requestOptions)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        setIsLoaded(true);
+                        
+                        setProductosAgregar(
+                            result
+                        );
+                    },
+                    (error) => {
+                        setIsLoaded(true);
+                        setErrors(error);
+                    }
+                )
+        });
+    }
+
+    const cerrarModalAgregarProductos = useCallback(() => {
+        setModalAgregarProductos(false);
+        
+    });
+
+    const mostrarModalCantidadSolicitada = useCallback(() => {
+        setModalCantidadSolicitada(true);
+        
+    });
+
+    const cerrarModalCantidadSolicitada = useCallback(() => {
+        setModalCantidadSolicitada(false);
+        
+    });
+
+    const agegarProductoVenta = ()=>{
+        mostrarModalCantidadSolicitada();
+    
+    };
+
+    const confirmarCantidad = (id, f)=> {
+        console.log("Dato2v:",dato2.current[0]);
+        console.log("Form.productos:",f.productos);
+        console.log("IDv:",id);
+        console.log("Formulariov:",f);
+        dato2.current[0].cantidadDisponible=parseInt(cantidad.current.val);
+        console.log("Cantidad",cantidad.current.val);
+        console.log(typeof cantidad.current.val);
+        f.productos.push(dato2.current[0]);
+        //f.productos[f.productos.length].nombre=dato2.current[0].nombreProducto;
+        console.log("Form.productosN:",f.productos);
+        console.log("FormulariovN:",f);
+        //console.log("SRv",e.selectedRows);
+        handleAddProductsSale(id, f);
+    }
+
+    const handleAddProductsSale = (id, form)=>{
+
+        user.getIdToken(true).then(token => {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(form)
+            };console.log("FormUpd:",form); 
+            //console.log(requestOptions);
+            //alert("Producto creado exitosamente");
+
+            fetch(`${BASE_URL}${PATH_SALES}/${id}`, requestOptions)
+                .then(result => result.json())
+                .then(result => {
+                    console.log("result: ", result);
+                    cargarProductos();
+                    dato.current.splice(0, dato.current.length);
+                    //alert("Producto Actualizado");
+                    setNewVal(newVal + 1);
+                }, error => {
+                    console.log(error);
+                });
+        })
+
+    };
+
+    
     const handleUpdate = useCallback((id, form) => {
         cerrarModalActualizar(); // Simple POST request with a JSON body using fetch
 
-        IdToken(tuser.getrue).then(token => {
+        user.getIdToken(true).then(token => {
             const requestOptions = {
                 method: 'PUT',
                 headers: {
@@ -519,7 +700,7 @@ const ListSales2 = props => {
 
 
         <DataTable
-            columns={columnas}
+            columns={columnasv}
             data={productosFiltrados}
             pagination paginationComponentOptions={paginacionopciones}
             fixedHeader
@@ -626,7 +807,7 @@ const ListSales2 = props => {
                                     fixedHeaderScrollHeight="600px"
                                     noDataComponent="No se encontraron pedidos" />
 
-                                <button type="button" name="editar" className="btnUtil" disabled={editar} onClick={() => mostrarModalActualizaagregarproductos(dato1.current)}>
+                                <button type="button" name="editar" className="btnUtil" disabled={editar} onClick={() => mostrarModalAgregarProductos(dato1.current)}>
                                     Agregar
                                 </button>
 
@@ -656,7 +837,7 @@ const ListSales2 = props => {
             <Row className="Margen">
                 <Col className="mt-3">
 
-                    <Modal isOpen={modalAgregar}>
+                    <Modal isOpen={modalAgregarProductos}>
                         <ModalHeader>
                             <div><h3>Agregar productos a venta {form.idVenta}</h3></div>
                         </ModalHeader>
@@ -678,15 +859,52 @@ const ListSales2 = props => {
                             </FormGroup>
 
                             <Col className="mt-5">
-                                <ListProducts2 />
+                            <DataTable
+                                    columns={columnas_2}
+                                    data={productosAgregar}
+                                    pagination paginationComponentOptions={paginacionopciones}
+                                    fixedHeader
+                                    selectableRows
+                                    selectableRowsSingle
+                                    selectableRowsHighlight
+                                    selectableRowsComponent={selectableRowsComponent.current}
+                                    onSelectedRowsChange={handleChange3.bind(this)}
+                                    fixedHeaderScrollHeight="600px"
+                                    noDataComponent="No se encontraron pedidos" />
                             </Col>
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button className="btnUtil1" onClick={() => handleUpdate(id.current, form)}>
-                                Actualizar
+                            <Button className="btnUtil1" onClick={(e) => agegarProductoVenta()}>
+                                Agregar
                             </Button>
-                            <Button className="btnUtil1" onClick={() => cerrarModalActualizar()}>
+                            <Button className="btnUtil1" onClick={() => cerrarModalAgregarProductos()}>
+                                Cancelar
+                            </Button>
+                        </ModalFooter>
+                    </Modal>
+
+                    <Modal isOpen={modalCantidadSolicitada}>
+                        <ModalHeader>
+                            <div><h3> Cantidad solicitada de: {dato2.nombreProducto}</h3></div>
+                        </ModalHeader>
+
+                        <ModalBody>
+                            
+
+                        <FormGroup>
+                                <label>
+                                    Cantidad solicitada:
+                                </label>
+                                <input className="form-control" name="cantidadDisponible" type="text" onChange={handleChange4} />
+                            </FormGroup>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button className="btnUtil1" onClick={(e) => confirmarCantidad(id1.current, form)}>
+                                Agregar
+                            </Button>
+                            <Button className="btnUtil1" onClick={() => cerrarModalCantidadSolicitada()}>
                                 Cancelar
                             </Button>
                         </ModalFooter>
