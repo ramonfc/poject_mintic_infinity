@@ -153,7 +153,7 @@ const ListSales2 = props => {
     const [newVal1, setNewVal1] = React.useState(0);
 
     const [busqueda, setBusqueda] = useState();
-    const [productosFiltrados, setProductosFiltrados] = useState();
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [productosAgregar, setProductosAgregar] = useState();
     const [productos, setProductos] = useState();
     const [borrar, setBorrar] = useState(true);

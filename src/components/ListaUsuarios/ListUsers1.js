@@ -93,7 +93,7 @@ const ListUsers1 = props => {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
     const [busqueda, setBusqueda] = useState();
-    const [usuariosFiltrados, setUsuariosFiltrados] = useState();
+    const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
     const [usuarios, setUsuarios] = useState();
     const [borrar, setBorrar] = useState(true);
     const [editar, setEditar] = useState(true);
@@ -158,21 +158,23 @@ const ListUsers1 = props => {
     const onChange = useCallback((event) => {
         setBusqueda(event.target.value);
         const PalabraBuscada = (event.target.value).toLowerCase().toString();
+        console.log("PalabraBuscada: ",PalabraBuscada)
         filtrarusuarios(PalabraBuscada);
     });
 
-    const filtrarusuarios = useCallback((e) => {
+    const filtrarusuarios = useCallback((usuarioBuscado) => {
        
-        console.log("Usuarios",usuarios);
-        console.log("Eventos",event.target.value);
+        console.log("Usuarios",usuarios.data);
+        //console.log("Eventos",e.target.value);
         try {
             let search = usuarios.filter(item => {
                 console.log("Item1:",item.name);
                 console.log("Item2:",item.username);
                 console.log("Item3:",item.documentId);
                 console.log("Busqueda",busqueda);
-                let test=(item.name + item.username + item.documentId).toLowerCase().toString();
-                return test.includes(e);
+                //let test=(item.name + item.username + item.documentId).toLowerCase().toString();
+                //return test.includes(e);
+                return (item.name + item.username + item.documentId).toLowerCase().match(usuarioBuscado)
             });
             console.log("Coincidencia",search);
             setUsuariosFiltrados(search);

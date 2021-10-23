@@ -74,7 +74,7 @@ const ListProducts1 = props => {
     const [isLoaded, setIsLoaded] = React.useState(false);
     const [errors, setErrors] = useState();
     const [busqueda, setBusqueda] = useState();
-    const [productosFiltrados, setProductosFiltrados] = useState();
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [productos, setProductos] = useState();
     const [borrar, setBorrar] = useState(true);
     const [editar, setEditar] = useState(true);
@@ -162,6 +162,7 @@ const ListProducts1 = props => {
             console.log(error);
         }
     });
+    
     const handleChange = useCallback((e) => {
         console.log("SR",e.selectedRows);
         const rows = e.selectedRows;
