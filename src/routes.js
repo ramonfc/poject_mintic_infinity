@@ -40,6 +40,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     layout: "/user",
+    permisos: 'admin, Vendedor, bodega, null'
   },
   {
     path: "/add-products",
@@ -47,6 +48,7 @@ const dashboardRoutes = [
     icon: Add,
     component: UserProfile,
     layout: "/user",
+    permisos: 'admin, bodega'
   },
   {
     path: "/list-products",
@@ -54,6 +56,7 @@ const dashboardRoutes = [
     icon: ListAlt,
     component: TableList,
     layout: "/user",
+    permisos: 'admin, Vendedor, bodega'
   },
   {
     path: "/create-sale",
@@ -61,6 +64,7 @@ const dashboardRoutes = [
     icon: Create,
     component: Typography,
     layout: "/user",
+    permisos: 'admin, Vendedor'
   },
   {
     path: "/list-sales",
@@ -68,6 +72,7 @@ const dashboardRoutes = [
     icon: ListAlt,
     component: Icons,
     layout: "/user",
+    permisos: 'admin, Vendedor'
   },
   {
     path: "/manage-users",
@@ -75,6 +80,7 @@ const dashboardRoutes = [
     icon: PersonAdd,
     component: Maps,
     layout: "/user",
+    permisos: 'admin'
   },
   {
     path: "/list-users",
@@ -82,6 +88,7 @@ const dashboardRoutes = [
     icon: People,
     component: NotificationsPage,
     layout: "/user",
+    permisos: 'admin'
   },
   {
     path: "/logout",
@@ -89,6 +96,7 @@ const dashboardRoutes = [
     icon: ExitToApp,
     component: CerrarSesion,
     layout: "/user",
+    permisos: 'admin, Vendedor, bodega'
   },
   {
     path: "/profile",
@@ -96,6 +104,7 @@ const dashboardRoutes = [
     icon: AccountCircle,
     component: UpgradeToPro,
     layout: "/user",
+    permisos: 'admin, Vendedor, bodega'
   },
 ];
 

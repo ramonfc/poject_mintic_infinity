@@ -198,6 +198,8 @@ const ListProducts1 = props => {
         });
         console.log("form:",form);
     });
+
+
     const handleDelete = useCallback(() => {
         console.log(dato);
         console.log(dato.length);
@@ -232,6 +234,9 @@ const ListProducts1 = props => {
         fetch(`${BASE_URL}${PATH_PRODUCTS}/${idAEliminar}`, requestOptions).then(result => result.json()).then(result => {
             console.log("result: ", result); //alert("Producto eliminado")
             //this.cargarProductos();
+            dato.current.splice(0, dato.current.length);
+            setBorrar(true);
+            setEditar(true);
         }, error => {
             console.log(error);
         });
@@ -248,6 +253,9 @@ const ListProducts1 = props => {
     });
     const cerrarModalActualizar = useCallback(() => {
         setModalActualizar(false);
+        dato.current.splice(0, dato.current.length);
+            setBorrar(true);
+            setEditar(true);
     });
     
     const handleUpdate = useCallback((id, form) => {
@@ -271,6 +279,8 @@ const ListProducts1 = props => {
             console.log("result: ", result);
             cargarProductos();
             dato.current.splice(0, dato.current.length);
+            setBorrar(true);
+            setEditar(true);
             alert("Producto Actualizado");
             setNewVal(newVal + 1);
         }, error => {
@@ -317,7 +327,7 @@ const ListProducts1 = props => {
     const customStyles = {
         rows: {
             style: {
-                 minHeight: '72px', fontSize: "1.2rem" // override the row height
+                 minHeight: '72px', fontSize: "0.8rem" // override the row height
             },
         },
         headCells: {
@@ -340,7 +350,7 @@ const ListProducts1 = props => {
         </div>
 
 
-        <DataTable customStyles={customStyles}
+        <DataTable 
         columns={columnas} 
         data={productosFiltrados}  
         pagination paginationComponentOptions={paginacionopciones} 
@@ -398,10 +408,18 @@ const ListProducts1 = props => {
                     </FormGroup>
 
                     <FormGroup>
-                        <label>
+                        {/* <label>
                             Estado:
                         </label>
-                        <input className="form-control" name="estadoProdInv" type="text" onChange={handleChange1} value={form.estadoProdInv} />
+                        <input className="form-control" name="estadoProdInv" type="text" onChange={handleChange1} value={form.estadoProdInv} /> */}
+                    
+            <label>Estado: </label>
+            <select type="select" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} name="estadoProdInv" onChange={handleChange1} value={form.estadoProdInv} className="mb-4">
+              <option value=""></option>
+              <option value="Disponible">Disponible</option>
+              <option value="No Disponible">No Disponible</option>
+            </select>
+                    
                     </FormGroup>
                     <FormGroup>
                         <label>

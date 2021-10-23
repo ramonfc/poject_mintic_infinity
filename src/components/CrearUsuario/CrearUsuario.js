@@ -192,7 +192,7 @@ function CrearUsuario() {
 
 
                                 <Label>Tipo de Documento</Label>
-                                <select type="select" name="docType" onChange={e => inputHandleChange(e)} value={form.docType} className="mb-4">
+                                <select type="select" name="docType" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} onChange={e => inputHandleChange(e)} value={form.docType} className="mb-4">
                                     <option value=""></option>
                                     <option value="cc">Cédula de Ciudadanía</option>
                                     <option value="ce">Cédula de Extranjería</option>                                    
@@ -214,7 +214,7 @@ function CrearUsuario() {
 
 
                                 <Label>Estado Usuario</Label>
-                                <select type="select" name="status" onChange={e => inputHandleChange(e)} value={form.status} className="mb-4">
+                                <select type="select" name="status" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} onChange={e => inputHandleChange(e)} value={form.status} className="mb-4">
                                     <option value=""></option>
                                     <option value="activo">Activo</option>
                                     <option value="inactivo">Inactivo</option> 
@@ -225,12 +225,11 @@ function CrearUsuario() {
                                 
                                 <br/>
                                 <Label>Rol</Label>
-                                <select type="select" name="rol" onChange={e => inputHandleChange(e)} value={form.rol} className="mb-4">
+                                <select type="select" name="rol" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} onChange={e => inputHandleChange(e)} value={form.rol} className="mb-4">
                                     <option value=""></option>
                                     <option value="admin">Administrador</option>
-                                    <option value="vendedor">Vendedor</option> 
-                                    <option value="gerente">Gerente</option>
-                                    <option value="almacenista">Almacenista</option>                                   
+                                    <option value="Vendedor">Vendedor</option>                         
+                                    <option value="bodega">Almacenista</option>                                   
                                 </select>
                                 
                             </Col>

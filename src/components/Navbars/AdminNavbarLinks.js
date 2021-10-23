@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -30,6 +30,7 @@ const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
 
+  const [Nombre, setNombre] = useState('null');
   const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
   const history = useHistory();
@@ -65,17 +66,63 @@ export default function AdminNavbarLinks() {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
-  };  
+  };
 
-  React.useEffect(() => {
-    if (loading) return;
-    if (!user) return history.replace("/");
-  }, [user, loading]);
+  // React.useEffect(() => {
+  //   if (loading) return;
+  //   //console.log('user adminNavBar',user.email)
+  //   if (!user) return history.replace("/");
+  // }, [user, loading]);
+  const imprimirNombre = (result) => {
+
+    console.log('rolSelector: ', result);
+    result.map((usuario)=> {
+      if (!user) { }
+      else {
+          console.log(' Navbar usuario.username: ',usuario.username)
+          console.log('Navbar user.email: ',user.email)
+          if (usuario.username === user.email){
+            setNombre(usuario.name);
+            console.log('Entreeeee setNombreee Navbar')
+          }
+   
+      }
+    })
+    
+  }; 
+
 
 
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  let nombre = '';
+  const saludoFuncion = () => {
+
+    console.log('Saludo en AdminNavbar')
+    if (!user) history.replace("/");
+    else {
+      user.getIdToken(true).then(token => {
+        
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        fetch(`${process.env.REACT_APP_BASE_URL}${"users"}`, requestOptions)
+          .then(res => res.json())
+          .then(
+            (result) => {imprimirNombre(result)}
+          )
+      });
+    } 
+
+  };
+
+
   return (
     <div>
       {/* <div className={classes.searchWrapper}>
@@ -93,8 +140,8 @@ export default function AdminNavbarLinks() {
         <Button color="white" aria-label="edit" justIcon round>
           <Search />
         </Button>
-      </div>
-      <Button
+      </div> 
+       <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
@@ -183,7 +230,10 @@ export default function AdminNavbarLinks() {
             </Grow>
           )}
         </Poppers>
-      </div>
+      </div> */}
+
+      Hola, {saludoFuncion()} {Nombre}
+
       <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
@@ -226,20 +276,20 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Profile
+                      Mi Perfil
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Settings
+                      Configuración
                     </MenuItem>
                     <Divider light />
                     <MenuItem
                       onClick={logout}
                       className={classes.dropdownItem}
                     >
-                      Logout
+                      Cerrar Sesión
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -247,7 +297,7 @@ export default function AdminNavbarLinks() {
             </Grow>
           )}
         </Poppers>
-      </div> */}
+      </div>
     </div>
   );
 }

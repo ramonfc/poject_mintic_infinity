@@ -190,7 +190,7 @@ export const FormRegProd = props => {
             }
 
             <Label>Estado en Inventario  </Label>
-            <select type="select" style={{width:"100%", height:"10%", fontSize:"1rem"}} name="estadoProdInv" onChange={handleChange} value={form.estadoProdInv} className="mb-4">
+            <select type="select" style={{width:"100%", height:"10%", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} name="estadoProdInv" onChange={handleChange} value={form.estadoProdInv} className="mb-4">
               <option value=""></option>
               <option value="Disponible">Disponible</option>
               <option value="No Disponible">No Disponible</option>

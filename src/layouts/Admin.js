@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -12,35 +12,105 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+let rutasModificadas = [];
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logoinvertido.png";
 
+//INFINITY
+import {
+  auth,
+  signInEmailAndPassword,
+  signInWithGoogle,
+} from "../components/Firebase/Firebase";
+import { useHistory } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 let ps;
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      if (prop.layout === "/user") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      return null;
-    })}
-    <Redirect from="/user" to="/user/dashboard" />
-  </Switch>
-);
+
+
 
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
+
+
+  const [user, loading, error] = useAuthState(auth);
+  const [errors, seterrors] = useState('');
+  const [rol, setRol] = useState('null');
+  const history = useHistory();  //INFINITY
+
+
+  //ROUTESS
+  
+  // if (user.email == 'justmarketco@gmail.com') {
+  //   rutasModificadas = routes
+  //   console.log('routes: ', routes);
+  //   console.log('rutasModificadas: ', rutasModificadas);
+  //   rutasModificadas.splice(3, 1);
+  // }
+  // let rol='null';
+   // FUNCION PARA ENCONTRAR ROL
+  const rolSelector = (result) => {
+
+    console.log('rolSelector: ', result);
+    result.map((usuario)=> {
+      if (!user) { }
+      else {
+          console.log('usuario.username: ',usuario.username)
+          console.log('user.email: ',user.email)
+          if (usuario.username === user.email){
+            setRol(usuario.rol);
+            console.log('Entreeeee')
+          }
+   
+      }
+    })
+    
+  }; 
+
+
+
+  rutasModificadas = [];
+  console.log('Admin Layout - routes: ', rutasModificadas);
+  const switchRoutes = (
+    <Switch>
+      
+      {routes.map((ruta, key) => {
+        //console.log('key:', key);
+        if (!user) { }
+        else {
+         
+            //rol = 'admin';
+            console.log('rol: ', rol)
+     
+        }
+        
+        if (ruta.layout === "/user" && ruta.permisos.match(rol)) {
+
+          rutasModificadas.push(ruta);
+          return (
+            <Route
+              path={ruta.layout + ruta.path}
+              component={ruta.component}
+              key={key}
+
+            />
+          );
+        }else{return null;}
+        
+      })}
+      <Redirect from="/user" to="/user/dashboard" />
+    </Switch>
+  );
+
+
+  //ROUTESS
+
+
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -66,9 +136,9 @@ export default function Admin({ ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
-  };
+  // const getRoute = () => {    //INFINITY
+  //   return window.location.pathname !== "/admin/maps";
+  // };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -90,12 +160,46 @@ export default function Admin({ ...rest }) {
         ps.destroy();
       }
       window.removeEventListener("resize", resizeFunction);
+
+      //USEEFFECT INFINITY
+      
+      if (loading) return;
+      if (!user) { return history.replace("/") } else {
+        console.log('Admin Layout user:', user);
+        console.log('Admin Layout history: ', history);
+        // if (user.email == 'justmarketco@gmail.com') {
+        //   // menu INFINITY
+        //   rutasModificadas = routes
+        //   console.log('routes: ', routes);
+        //   console.log('rutasModificadas: ', rutasModificadas);
+        //   rutasModificadas.splice(3, 1);
+        // }
+        user.getIdToken(true).then(token => {
+          const requestOptions = {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          };
+          fetch(`${process.env.REACT_APP_BASE_URL}${"users"}`, requestOptions)
+            .then(res => res.json())
+            .then(
+              (result) => {rolSelector(result)}//console.log('result: ',result)}
+            )
+        });
+
+      }
+
+
     };
-  }, [mainPanel]);
+  }, [mainPanel]); //mainPanel,user,loading
+
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes}
+        routes={rutasModificadas}
         logoText={"INFINITY"}
         logo={logo}
         image={image}
@@ -105,28 +209,26 @@ export default function Admin({ ...rest }) {
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
+        {/* //HEADER ------ INFINITY */}
         <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
+          // routes={rutasModificadas}
+          // handleDrawerToggle={handleDrawerToggle}
+          // {...rest}
         />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
-          <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
-          </div>
-        ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
-        {getRoute() ? <Footer /> : null}
-        <FixedPlugin
+
+        <div className={classes.content}>
+          <div className={classes.container}>{switchRoutes}</div>
+        </div>
+
+        <Footer />
+        {/* <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}
           bgColor={color}
           bgImage={image}
           handleFixedClick={handleFixedClick}
           fixedClasses={fixedClasses}
-        />
+        /> */}
       </div>
     </div>
   );

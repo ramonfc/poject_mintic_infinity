@@ -58,6 +58,7 @@ const signInEmailAndPassword = (email, password) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      alert("usuario o contraseña inválida")
     });
 };
 

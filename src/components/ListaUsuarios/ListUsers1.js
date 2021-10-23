@@ -216,6 +216,8 @@ const ListUsers1 = props => {
         });
         console.log("form:", form);
     });
+
+
     const handleDelete = useCallback(() => {
         console.log(dato);
         console.log(dato.length);
@@ -232,8 +234,12 @@ const ListUsers1 = props => {
             cargarUsuarios();
             alert("Se eliminó a: " + msg.join(","));
             dato.current.splice(0, dato.current.length);
+            setBorrar(true);
+            setEditar(true);
         }
     });
+
+
     const eliminarUsuario = useCallback((idAEliminar) => {
         // Simple POST request with a JSON body using fetch
         user.getIdToken(true).then(token => {
@@ -288,7 +294,11 @@ const ListUsers1 = props => {
                 .then(result => {
                     console.log("result: ", result);
                     cargarUsuarios();
-                    dato.current.splice(0, dato.current.length);
+
+                    dato.current.splice(0, dato.current.length);                    
+                    setBorrar(true);
+                    setEditar(true);
+
                     alert("Usuario Actualizado");
                     setNewVal(newVal + 1);
                 }, error => {
@@ -397,10 +407,21 @@ const ListUsers1 = props => {
                     </FormGroup>
 
                     <FormGroup>
-                        <label>
+                       {/*  <label>
                             Rol:
                         </label>
-                        <input className="form-control" name="rol" type="text" onChange={handleChange1} value={form.rol} required />
+                        <input className="form-control" name="rol" type="text" onChange={handleChange1} value={form.rol} required /> */}
+                    
+                        <label>Rol</label>
+                            <select type="select" name="rol" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} onChange={handleChange1} value={form.rol} className="mb-4">
+                                <option value=""></option>
+                                <option value="admin">Administrador</option>
+                                <option value="Vendedor">Vendedor</option>                         
+                                <option value="bodega">Almacenista</option>                                   
+                            </select>
+                    
+                    
+                    
                     </FormGroup>
 
                     <FormGroup>
@@ -418,10 +439,20 @@ const ListUsers1 = props => {
                     </FormGroup>
 
                     <FormGroup>
-                        <label>
+                       {/*  <label>
                             Estado:
                         </label>
-                        <input className="form-control" name="status" type="text" onChange={handleChange1} value={form.status} />
+                        <input className="form-control" name="status" type="text" onChange={handleChange1} value={form.status} /> */}
+                    
+                        <label>Estado</label>
+                            <select type="select" name="status" style={{width:"100%", height:"2.5rem", fontSize:"1rem", border: "2px solid #d5dbe3", borderRadius:"5px"}} onChange={handleChange1} value={form.status} className="mb-4">
+                                <option value=""></option>
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option> 
+                                <option value="suspendido">Suspendido</option>
+                                <option value="bloqueado">Bloqueado</option>                                   
+                            </select>
+
                     </FormGroup>
 
                 </ModalBody>

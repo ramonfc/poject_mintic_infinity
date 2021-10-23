@@ -11,7 +11,7 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
-import RTLNavbarLinks from "./RTLNavbarLinks.js";
+// import RTLNavbarLinks from "./RTLNavbarLinks.js"; //INFINITY
 import Button from "components/CustomButtons/Button.js";
 
 //hooks
@@ -28,19 +28,25 @@ export default function Header(props) {
   const appBarClasses = classNames({
     [" " + classes[color]]: color,
   });
+  // console.log('color: ',color);
   return (
     <AppBar className={classes.appBar + appBarClasses}>
+
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
             {routeName}
           </Button>
+
         </div>
+
         <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          <AdminNavbarLinks />
+          {/* {props.rtlActive ? null: <AdminNavbarLinks />}  */}
+          {/* INFINITY */}
         </Hidden>
-        <Hidden mdUp implementation="css">
+        {/* <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -48,7 +54,7 @@ export default function Header(props) {
           >
             <Menu />
           </IconButton>
-        </Hidden>
+        </Hidden> */}
       </Toolbar>
     </AppBar>
   );

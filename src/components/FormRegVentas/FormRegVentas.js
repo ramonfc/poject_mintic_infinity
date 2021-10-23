@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState, useCallback, useEffect } from 'react';
 import { Row, Col, Button, Container, Form, Label } from 'reactstrap';
 import './FormRegVentas.css'
 import Card from "components/Card/Card";
@@ -10,86 +10,146 @@ import InputLbl from "components/InputLbl/InputLbl";
 import SelectCustom from 'components/SelectCustom/SelectCustom';
 
 
-const options =[
-    {value: "proceso", label:"En Proceso"},
-    {value: "entregada", label:"Entregada"},
-    {value: "cancelada", label:"Cancelada"}
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "../Firebase/Firebase";
+
+
+const options = [
+    { value: "proceso", label: "En Proceso" },
+    { value: "entregada", label: "Entregada" },
+    { value: "cancelada", label: "Cancelada" }
 ];
 
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const PATH_VENTAS= "ventas"
+const PATH_VENTAS = "sales"
 
-export class FormRegVentas extends Component {
 
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            data: [],
-            modalActualizar: false,
-            modalInsertar: false,
-            form: {            
-                idVendedor:"",
-                valorTotal:0,
-                estadoVenta: "",
-                idCliente:"",
-                nombreCliente:"",
-                fechaVenta:"",
-                fechaEnvio:"",
-                fechaEntrega:""
-            }
+export const FormRegVentas = props => {
+
+    const auth = getAuth();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [data, setData]= useState([]);
+    const [user, loading, error] = useAuthState(auth);
+    const history = useHistory();
+    const [form, setForm] = useState({
+      idVenta:"",
+      idVendedor:"",
+      nombreVendedor:"",
+      valorTotal:0,
+      estadoSale: "",
+      idCliente:"",
+      nombreCliente:"",
+      fechaSale:"",
+      fechaEnvio:"",
+      fechaEntrega: ""
+      });
+
+    useEffect(() => {
+        if (loading) return;
+        if (!user) history.replace("/");
+      }, [user, loading]);
+  
+  const insertar = useCallback(() => {
+    setForm({
+      idVenta:"",
+      idVendedor:"",
+      nombreVendedor:"",
+      valorTotal:0,
+      estadoSale: "",
+      idCliente:"",
+      nombreCliente:"",
+      fechaSale:"",
+      fechaEnvio:"",
+      fechaEntrega: ""
+    });
+    let ventaACrear = { ...form
+    };
+    console.log(ventaACrear);
+    crearVenta(ventaACrear);
+    /* this.setState({ modalInsertar: false }); */
+  });
+
+
+  const handleChange = useCallback((e) => {
+    setForm({ ...form,
+      [e.target.name]: e.target.value
+    });
+    console.log(form)
+  });
+
+  const handleSelectChange = useCallback(() => {
+    setForm({ ...form,
+      estadoProdInv: value
+    });
+  });
+
+
+  const cargarVentas = useCallback(() => {
+
+    user.getIdToken(true).then(token => {
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          //body: JSON.stringify(usuarioACrear)
         };
-
-    }
-
-    insertar = () => {
-
-        this.setState({
-            form: {
-                idVendedor:"",
-                nombreVendedor:"",
-                valorTotal:0,
-                estadoVenta: "",
-                idCliente:"",
-                nombreCliente:"",
-                fechaVenta:"",
-                fechaEnvio:"",
-                fechaEntrega:""
-            }
-        });
-
-        let ventaACrear = { ...this.state.form };
-        console.log(ventaACrear);
+        console.log("Token: ",token);
         
 
-        this.crearVenta(ventaACrear);
-        /* this.setState({ modalInsertar: false }); */
-    }
+    fetch(`${BASE_URL}${PATH_VENTAS}`).then(result => result.json()).then(result => {
+      setData(result);
+    }, // Nota: es importante manejar errores aquí y no en 
+    // un bloque catch() para que no interceptemos errores
+    // de errores reales en los componentes.
+    error => {
+      console.log(error);
+    })
+    });
+  });
 
 
-    handleChange = (e) => {
-        this.setState({
-            form: {
-                ...this.state.form,
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
+  const crearVenta = useCallback((ventaACrear) => {
 
-    handleSelectChange = (value) => {
-        this.setState({
-            form: {
-                ...this.state.form,
-                estadoProdInv: value,
-            },
-        });
-    }
+    console.log(`${BASE_URL}${PATH_VENTAS}`)
+    // Simple POST request with a JSON body using fetch
+    user.getIdToken(true).then(token => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(ventaACrear)
+    }; //console.log(requestOptions);
+    //alert("Producto creado exitosamente");
+     
+    
+    fetch(`${BASE_URL}${PATH_VENTAS}`, requestOptions).then(result => result.json()).then(result => {
+      //this.cargarProducts();
+      console.log("result: ", result);
+      alert("Espera");
+      cargarVentas();
+    }, error => {
+      console.log(error);
+    })
 
-    render() {
-        return (
+    });
+  });
 
-            <Card>
+
+  return <Card>
                 <GridItem>
                     <CardHeader color="info">
 
@@ -98,125 +158,133 @@ export class FormRegVentas extends Component {
                     </CardHeader>
 
                     <Container>
-                       <br/ >
+                        <br />
 
-                        <Row id="vistaVentas">                            
-
-                            <Col id="inputs" sm="8">
-
-
-                            <Form>
-                               {/*  <Label for="idVenta">ID de la Venta</Label>
-                                <Input className="mb-3" type="text" name="idProduct" placeholder="" /> */}
-
-                                {/* <InputLbl text="ID de la Venta" type="text"  className="mb-3" name="idVenta"/> */}
-                                
-                                <InputLbl text="ID del Vendedor" type="text"  className="mb-3" name="idVendedor"/>
-
-                                <InputLbl text="Nombre del Vendedor" type="text"  className="mb-3" name="nombreVendedor"/>
-
-                                <InputLbl text="Valor Total" type="text"  className="mb-3" name="valorTotal"/>
-
-                                {/* <SelectCustom options={options}  className="mb-3" text="Estado de la Venta" name="estadoVenta"/> */}
-                                <Label  >Estado de la Venta</Label>
-                                <select type="select" name="estadoVenta" style={{width:"100%", height:"2.2rem", fontSize:"1rem"}} onChange={this.handleChange} value={this.state.form.estadoVenta} className="mb-3">
-                                <option value=""></option>
-                                    <option value="proceso">En Proceso</option>
-                                    <option value="cancelada">Cancelada</option> 
-                                    <option value="entregada">Entregada</option>                                   
-                                </select> 
-
-                                <InputLbl text="ID del Cliente" type="text"  className="mb-3" name="idCliente"/>
-
-                                <InputLbl text="Nombre del Cliente" type="text"  className="mb-3" name="nombreCliente"/>                               
-
-                                <InputLbl text="Fecha de la venta" type="date"  className="mb-3" name="fechaVenta"/>
-
-
-                                <Row className="fechas">
-                                    <Col>                            
-                                        <InputLbl text="Fecha del Envío" type="date"  className="mb-3" name="fechaEnvio"/>
-                                    </Col>
-
-                                    <Col>                                    
-                                        <InputLbl text="Fecha de Entrega" type="date"  className="mb-3" name="fechaEntrega"/>
-                                    </Col>
-
-                                </Row>
-
-                                <Row>
-                                    <Col>
-                                        <Button className="" type="submit" color="primary" id="crearProd">Registrar</Button>
-                                    </Col>
-
-                                    <Col>
-                                        <Button className="" outline color="secondary" type="reset" id="limpiar">Limpiar</Button>
-                                    </Col>
-                                </Row>
-
-                                </Form>
-
-
+                     
+                        <Row>
+                            <Col sm="6">
+                                <InputLbl text="ID de la Venta" type="text" className="mb-3" name="idVenta" onChange={handleChange} value={form.idVenta}/>
                             </Col>
 
-                            
-
+                            <Col sm="6">
+                                <InputLbl text="ID del Vendedor" type="text" className="mb-3" name="idVendedor" onChange={handleChange} value={form.idVendedor}/>
+                            </Col>
                         </Row>
-                        
 
+                        <Row>
+                            <Col sm="6">
+                                <InputLbl text="Valor Total" type="text" className="mb-3" name="valorTotal" onChange={handleChange} value={parseInt(form.valorTotal)}/>
+                            </Col>
+
+                            <Col sm="6">
+                                <InputLbl text="Nombre del Vendedor" type="text" className="mb-3" name="nombreVendedor"onChange={handleChange} value={form.nombreVendedor}/>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col sm="6">
+                                <Label>Estado de la Venta</Label>
+                                <select type="select" name="estadoSale" style={{
+                width: "100%",
+                height: "2.2rem",
+                fontSize: "1rem",
+                border: "2px solid #d5dbe3",
+                borderRadius: "5px"
+              }} onChange={handleChange} value={form.estadoSale} className="mb-3">
+                                    <option value=""></option>
+                                    <option value="proceso">En Proceso</option>
+                                    <option value="cancelada">Cancelada</option>
+                                    <option value="entregada">Entregada</option>
+                                </select>
+                            </Col>
+
+                            <Col sm="6">
+                                <InputLbl text="ID del Cliente" type="text" className="mb-3" name="idCliente" onChange={handleChange} value= {form.idCliente}/>
+                            </Col>
+                        </Row>
+
+
+                        <Row>
+                            <Col sm="6">
+                                <InputLbl text="Fecha de la venta" type="date" className="mb-3" name="fechaSale" onChange={handleChange} value={form.fechaSale}/>
+                            </Col>
+
+                            <Col sm="6">
+                                <InputLbl text="Nombre del Cliente" type="text" className="mb-3" name="nombreCliente" onChange={handleChange} value= {form.nombreCliente}/>
+                            </Col>
+                        </Row>
+
+
+                        <Row>
+                            <Col sm="3">
+                                <InputLbl text="Fecha del Envío" type="date" className="mb-3" name="fechaEnvio" onChange={handleChange} value={form.fechaEnvio}/>
+                            </Col>
+
+                            <Col sm="3">
+                                <InputLbl text="Fecha de Entrega" type="date" className="mb-3" name="fechaEntrega" onChange={handleChange} value={form.fechaEntrega}/>
+                            </Col>
+                        </Row>
+
+                        <Row className="mt-4">
+                            <Col>
+                                <Button type="submit" color="primary" onClick={insertar}>Registrar</Button>
+                            </Col>
+
+                            <Col>
+                                <Button color="secondary" type="reset">Limpiar</Button>
+                            </Col>
+                        </Row>
+       
+
+                        {
+          /* <Row id="vistaVentas">
+             
+                     <Form className= "mb-3">
+                   
+                       <Col  sm="8">
+                         <InputLbl text="ID de la Venta" type="text" className="mb-3" name="idVenta" />
+                         <InputLbl text="Valor Total" type="text" className="mb-3" name="valorTotal" />
+                          
+                         <Label  >Estado de la Venta</Label>
+                         <select type="select" name="estadoVenta" style={{ width: "100%", height: "2.2rem", fontSize: "1rem", border: "2px solid #d5dbe3", borderRadius: "5px" }} onChange={this.handleChange} value={this.state.form.estadoVenta} className="mb-3">
+                             <option value=""></option>
+                             <option value="proceso">En Proceso</option>
+                             <option value="cancelada">Cancelada</option>
+                             <option value="entregada">Entregada</option>
+                         </select>
+                             <InputLbl text="Fecha de la venta" type="date" className="mb-3" name="fechaVenta" />
+                             <Row className="fechas">
+                             <Col>
+                                 <InputLbl text="Fecha del Envío" type="date" className="mb-3" name="fechaEnvio" />
+                             </Col>
+                               <Col>
+                                 <InputLbl text="Fecha de Entrega" type="date" className="mb-3" name="fechaEntrega" />
+                             </Col>
+                           </Row>
+                     </Col>
+                           <Col sm="4">
+                         <InputLbl text="ID del Vendedor" type="text" className="mb-3" name="idVendedor" />
+                           <InputLbl text="Nombre del Vendedor" type="text" className="mb-3" name="nombreVendedor" />
+                           <InputLbl text="ID del Cliente" type="text" className="mb-3" name="idCliente" />
+                           <InputLbl text="Nombre del Cliente" type="text" className="mb-3" name="nombreCliente" />
+                       </Col>
+                               <Row className= "mt-4">
+                         <Col>
+                             <Button  type="submit" color="primary" >Registrar</Button>
+                         </Col>
+                           <Col>
+                             <Button   color="secondary" type="reset" >Limpiar</Button>
+                         </Col>
+                     </Row>
+                   </Form>
+                                </Row>
+          */
+        }
                     </Container>
-                    <br/>
+                    <br />
                 </GridItem>
-            </Card>
+            </Card>;
 
-        )
-    }
-    
-
-    cargarVentas() {
-        fetch(`${BASE_URL}${PATH_VENTAS}`)
-            .then(result => result.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        data: result
-                    });
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    console.log(error);
-                }
-            )
-    }
-
-    crearVenta(ventaACrear) {
-        // Simple POST request with a JSON body using fetch
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(ventaACrear)
-        };
-
-        //console.log(requestOptions);
-        //alert("Producto creado exitosamente");
-        
-
-        fetch(`${BASE_URL}${PATH_VENTAS}`, requestOptions)
-            .then(result => result.json())
-            .then(
-                (result) => {
-                    //this.cargarProducts();
-                    console.log("result: ", result);
-                    alert("Espera")
-                    this.cargarVentas();
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-    }
-}
+};
 
 export default FormRegVentas

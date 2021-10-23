@@ -17,6 +17,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { getAuth } from "firebase/auth";
+import { FlashOffOutlined } from '@material-ui/icons';
 
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -366,7 +367,7 @@ const ListSales2 = props => {
         if (rows.length === 0) {
             setBorrar(true);
             setEditar(true);
-            dato1.productos.splice(0, props.length);
+           
         }
 
         if (rows.length === 1) {
@@ -458,9 +459,14 @@ const ListSales2 = props => {
         }; //console.log(requestOptions);
         //alert("Producto creado exitosamente");
 
-        fetch(`${BASE_URL}${PATH_SALES}/${idAEliminar}`, requestOptions).then(result => result.json()).then(result => {
+        fetch(`${BASE_URL}${PATH_SALES}/${idAEliminar}`, requestOptions)
+        .then(result => result.json()).
+        then(result => {
             console.log("result: ", result); //alert("Producto eliminado")
-            //this.cargarProductos();
+            cargarProductos();
+            dato.current.splice(0, dato.current.length);
+            setEditar(true)
+            setBorrar(true)
         }, error => {
             console.log(error);
         });
@@ -486,7 +492,9 @@ const ListSales2 = props => {
             console.log("result: ", result); //alert("Producto eliminado")
             //this.cargarProductos();
             setProductosVenta(result.productos);
-        
+            dato.current.splice(0, dato.current.length);
+            setEditar(true)
+            setBorrar(true)
         }, error => {
             console.log(error);
         });
@@ -522,6 +530,9 @@ const ListSales2 = props => {
     const cerrarModalActualizar = useCallback(() => {
         setModalActualizar(false);
         console.log("Apagando modal");
+        dato.current.splice(0, dato.current.length);
+        setEditar(true)
+        setBorrar(true)
     });
 
     const mostrarModalAgregarProductos = useCallback(() => {
@@ -583,16 +594,69 @@ const ListSales2 = props => {
         console.log("Form.productos:",f.productos);
         console.log("IDv:",id);
         console.log("Formulariov:",f);
-        dato2.current[0].cantidadDisponible=parseInt(cantidad.current.val);
-        console.log("Cantidad",cantidad.current.val);
-        console.log(typeof cantidad.current.val);
-        f.productos.push(dato2.current[0]);
-        //f.productos[f.productos.length].nombre=dato2.current[0].nombreProducto;
-        console.log("Form.productosN:",f.productos);
-        console.log("FormulariovN:",f);
-        //console.log("SRv",e.selectedRows);
-        handleAddProductsSale(id, f);
+        let curCantidad = parseInt(cantidad.current.val);
+        let disCantidad = dato2.current[0].cantidadDisponible;
+        console.log("Cantidad",curCantidad);
+        console.log("Disponible", disCantidad);
+        if(curCantidad <= disCantidad){
+            dato2.current[0].cantidadDisponible=parseInt(cantidad.current.val);
+            f.productos.push(dato2.current[0]);
+            //dato2.current[0].cantidadDisponible = (disCantidad - curCantidad)
+            //f.productos[f.productos.length].nombre=dato2.current[0].nombreProducto;
+            console.log("Form.productosN:",f.productos);
+            setProductosVenta(f.productos.map(x=>{return x;}));    //Cambio Javier aca
+            console.log("PV", productosVenta);
+            console.log("FormulariovN:",f);
+            //console.log("SRv",e.selectedRows);
+            handleAddProductsSale(id, f);
+            let id1 = dato2.current[0]._id;
+            let f1 = {
+                skw: dato2.current[0].skw,
+                nombreProducto: dato2.current[0].nombreProducto,
+                descripcionProducto: dato2.current[0].descripcionProducto,
+                cantidadDisponible: (disCantidad - curCantidad),
+                estadoProdInv: dato2.current[0].estadoProdInv,
+                precioUnitario: dato2.current[0].precioUnitario
+                          }
+
+            handleUpdate12(id1,f1)
+        }else{
+            let msg = "Cantidad no disponible, existencias: " + disCantidad;
+            alert(msg);             
+        }
+
+        cerrarModalCantidadSolicitada();
+
     }
+
+    const handleUpdate12 = useCallback((id, form) => {
+        console.log("body:",dato.current);
+        //cerrarModalActualizar(); // Simple POST request with a JSON body using fetch
+
+        user.getIdToken(true).then(token => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(form)
+        }; //console.log(requestOptions);
+        //alert("Producto creado exitosamente");
+
+        fetch(`${BASE_URL}${PATH_PRODUCTS}/${id}`, requestOptions)
+        .then(result => result.json())
+        .then(result => {
+            console.log("result: ", result);
+            // cargarProductos();
+            dato.current.splice(0, dato.current.length);
+            // alert("Producto Actualizado");
+            // setNewVal(newVal + 1);
+        }, error => {
+            console.log(error);
+        });
+    })
+    });
 
     const handleAddProductsSale = (id, form)=>{
 
@@ -614,7 +678,8 @@ const ListSales2 = props => {
                     console.log("result: ", result);
                     cargarProductos();
                     dato.current.splice(0, dato.current.length);
-                    //alert("Producto Actualizado");
+                    setEditar(true)
+                    setBorrar(true)
                     setNewVal(newVal + 1);
                 }, error => {
                     console.log(error);
@@ -644,7 +709,9 @@ const ListSales2 = props => {
                     console.log("result: ", result);
                     cargarProductos();
                     dato.current.splice(0, dato.current.length);
-                    alert("Producto Actualizado");
+                    setEditar(true)
+                    setBorrar(true)
+                    alert("Venta Actualizada");
                     setNewVal(newVal + 1);
                 }, error => {
                     console.log(error);
@@ -774,7 +841,7 @@ const ListSales2 = props => {
                                 <label>
                                     Estado de la venta:
                                 </label>
-                                <input className="form-control" name="idCliente" type="text" onChange={handleChange1} value={form.estadoSale} />
+                                <input className="form-control" name="idCliente" type="text" onChange={handleChange1} value={form.estadoSale} readOnly/>
                             </FormGroup>
                             <FormGroup>
                                 <label>
@@ -879,14 +946,14 @@ const ListSales2 = props => {
                                 Agregar
                             </Button>
                             <Button className="btnUtil1" onClick={() => cerrarModalAgregarProductos()}>
-                                Cancelar
+                                Cerrar
                             </Button>
                         </ModalFooter>
                     </Modal>
 
                     <Modal isOpen={modalCantidadSolicitada}>
                         <ModalHeader>
-                            <div><h3> Cantidad solicitada de: {dato2.nombreProducto}</h3></div>
+                            <div><h3> Cantidad a solicitar:</h3></div>
                         </ModalHeader>
 
                         <ModalBody>
